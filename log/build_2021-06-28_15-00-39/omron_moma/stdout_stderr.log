@@ -1,0 +1,16 @@
+running develop
+running egg_info
+writing omron_moma.egg-info/PKG-INFO
+writing dependency_links to omron_moma.egg-info/dependency_links.txt
+writing entry points to omron_moma.egg-info/entry_points.txt
+writing requirements to omron_moma.egg-info/requires.txt
+writing top-level names to omron_moma.egg-info/top_level.txt
+reading manifest file 'omron_moma.egg-info/SOURCES.txt'
+writing manifest file 'omron_moma.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/site.py
+Creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron-moma.egg-link (link to .)
+Installing demo script to /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/omron_moma
+
+Installed /home/gy/Omron_MoMa_ROS2/build/omron_moma
+running install_data

@@ -1,0 +1,6 @@
+[submodule "src/Omron_TM_ROS2"]
+	path = src/Omron_TM_ROS2
+	url = https://github.com/guanyewtan/Omron_TM_ROS2.git
+[submodule "src/Omron_AMR_ROS2"]
+	path = src/Omron_AMR_ROS2
+	url = https://github.com/guanyewtan/Omron_AMR_ROS2.git

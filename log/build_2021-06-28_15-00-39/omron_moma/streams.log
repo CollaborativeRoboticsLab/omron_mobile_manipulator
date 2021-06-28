@@ -1,0 +1,18 @@
+[0.400s] Invoking command in '/home/gy/Omron_MoMa_ROS2/build/omron_moma': PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/gy/Omron_MoMa_ROS2/install/omron_moma --editable --build-directory /home/gy/Omron_MoMa_ROS2/build/omron_moma/build --no-deps install_data --install-dir /home/gy/Omron_MoMa_ROS2/install/omron_moma
+[0.652s] running develop
+[0.787s] running egg_info
+[0.788s] writing omron_moma.egg-info/PKG-INFO
+[0.788s] writing dependency_links to omron_moma.egg-info/dependency_links.txt
+[0.788s] writing entry points to omron_moma.egg-info/entry_points.txt
+[0.788s] writing requirements to omron_moma.egg-info/requires.txt
+[0.788s] writing top-level names to omron_moma.egg-info/top_level.txt
+[0.821s] reading manifest file 'omron_moma.egg-info/SOURCES.txt'
+[0.822s] writing manifest file 'omron_moma.egg-info/SOURCES.txt'
+[0.864s] running build_ext
+[0.864s] Creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/site.py
+[0.866s] Creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron-moma.egg-link (link to .)
+[0.867s] Installing demo script to /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/omron_moma
+[0.867s] 
+[0.867s] Installed /home/gy/Omron_MoMa_ROS2/build/omron_moma
+[0.867s] running install_data
+[1.075s] Invoked command in '/home/gy/Omron_MoMa_ROS2/build/omron_moma' returned '0': PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/gy/Omron_MoMa_ROS2/install/omron_moma --editable --build-directory /home/gy/Omron_MoMa_ROS2/build/omron_moma/build --no-deps install_data --install-dir /home/gy/Omron_MoMa_ROS2/install/omron_moma

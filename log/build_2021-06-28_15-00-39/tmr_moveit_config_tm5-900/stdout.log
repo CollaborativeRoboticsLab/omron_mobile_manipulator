@@ -1,0 +1,32 @@
+-- Found ament_cmake: 0.9.8 (/opt/ros/foxy/share/ament_cmake/cmake)
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/gy/Omron_MoMa_ROS2/build/tmr_moveit_config_tm5-900
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/ament_index/resource_index/package_run_dependencies/tmr_moveit_config_tm5-900
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/ament_index/resource_index/parent_prefix_path/tmr_moveit_config_tm5-900
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/environment/ament_prefix_path.sh
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/environment/ament_prefix_path.dsv
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/environment/path.sh
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/environment/path.dsv
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/local_setup.bash
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/local_setup.sh
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/local_setup.zsh
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/local_setup.dsv
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/package.dsv
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/ament_index/resource_index/packages/tmr_moveit_config_tm5-900
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/cmake/tmr_moveit_config_tm5-900Config.cmake
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/cmake/tmr_moveit_config_tm5-900Config-version.cmake
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/package.xml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/chomp_planning.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/fake_controllers.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/joint_limits.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/kinematics.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/ompl_planning.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/ros_controllers.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/sensors_3d.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/stomp_planning.yaml
+-- Symlinking: /home/gy/Omron_MoMa_ROS2/install/tmr_moveit_config_tm5-900/share/tmr_moveit_config_tm5-900/config/tm5-900.srdf

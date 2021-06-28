@@ -1,0 +1,19 @@
+[0.466s] Invoking command in '/home/gy/Omron_MoMa_ROS2/build/om_aiv_util': AMENT_PREFIX_PATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg LD_LIBRARY_PATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/python3.8/site-packages:/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/gy/Omron_MoMa_ROS2/install/om_aiv_util --editable --build-directory /home/gy/Omron_MoMa_ROS2/build/om_aiv_util/build --no-deps install_data --install-dir /home/gy/Omron_MoMa_ROS2/install/om_aiv_util
+[0.750s] running develop
+[0.925s] running egg_info
+[0.931s] writing om_aiv_util.egg-info/PKG-INFO
+[0.931s] writing dependency_links to om_aiv_util.egg-info/dependency_links.txt
+[0.931s] writing entry points to om_aiv_util.egg-info/entry_points.txt
+[0.934s] writing requirements to om_aiv_util.egg-info/requires.txt
+[0.934s] writing top-level names to om_aiv_util.egg-info/top_level.txt
+[1.001s] reading manifest file 'om_aiv_util.egg-info/SOURCES.txt'
+[1.002s] writing manifest file 'om_aiv_util.egg-info/SOURCES.txt'
+[1.055s] running build_ext
+[1.055s] Creating /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/python3.8/site-packages/site.py
+[1.058s] Creating /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/python3.8/site-packages/om-aiv-util.egg-link (link to .)
+[1.059s] Installing arcl_api_server script to /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/om_aiv_util
+[1.059s] Installing ld_states_publisher script to /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/om_aiv_util
+[1.059s] 
+[1.059s] Installed /home/gy/Omron_MoMa_ROS2/build/om_aiv_util
+[1.059s] running install_data
+[1.107s] Invoked command in '/home/gy/Omron_MoMa_ROS2/build/om_aiv_util' returned '0': AMENT_PREFIX_PATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg LD_LIBRARY_PATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/python3.8/site-packages:/home/gy/Omron_MoMa_ROS2/install/om_aiv_msg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/gy/Omron_MoMa_ROS2/install/om_aiv_util --editable --build-directory /home/gy/Omron_MoMa_ROS2/build/om_aiv_util/build --no-deps install_data --install-dir /home/gy/Omron_MoMa_ROS2/install/om_aiv_util

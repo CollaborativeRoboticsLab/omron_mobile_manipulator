@@ -1,0 +1,44 @@
+[0.482s] Invoking command in '/home/gy/Omron_MoMa_ROS2/src/Omron_TM_ROS2/src/techman_robot_get_status': PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/tm_get_status build --build-base /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build install --prefix /home/gy/Omron_MoMa_ROS2/install/tm_get_status --record /home/gy/Omron_MoMa_ROS2/build/tm_get_status/install.log --single-version-externally-managed
+[0.778s] running egg_info
+[0.782s] creating ../../../../build/tm_get_status/tm_get_status.egg-info
+[0.782s] writing ../../../../build/tm_get_status/tm_get_status.egg-info/PKG-INFO
+[0.782s] writing dependency_links to ../../../../build/tm_get_status/tm_get_status.egg-info/dependency_links.txt
+[0.782s] writing entry points to ../../../../build/tm_get_status/tm_get_status.egg-info/entry_points.txt
+[0.782s] writing requirements to ../../../../build/tm_get_status/tm_get_status.egg-info/requires.txt
+[0.784s] writing top-level names to ../../../../build/tm_get_status/tm_get_status.egg-info/top_level.txt
+[0.790s] writing manifest file '../../../../build/tm_get_status/tm_get_status.egg-info/SOURCES.txt'
+[0.829s] reading manifest file '../../../../build/tm_get_status/tm_get_status.egg-info/SOURCES.txt'
+[0.829s] writing manifest file '../../../../build/tm_get_status/tm_get_status.egg-info/SOURCES.txt'
+[0.829s] running build
+[0.829s] running build_py
+[0.829s] creating /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build
+[0.829s] creating /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib
+[0.829s] creating /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status
+[0.829s] copying tm_get_status/get_status.py -> /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status
+[0.829s] copying tm_get_status/image_pub.py -> /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status
+[0.831s] copying tm_get_status/translate_jason_to_list.py -> /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status
+[0.832s] copying tm_get_status/__init__.py -> /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status
+[0.832s] running install
+[0.835s] running install_lib
+[0.836s] creating /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status
+[0.836s] copying /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status/get_status.py -> /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status
+[0.836s] copying /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status/image_pub.py -> /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status
+[0.837s] copying /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status/translate_jason_to_list.py -> /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status
+[0.838s] copying /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build/lib/tm_get_status/__init__.py -> /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status
+[0.838s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status/get_status.py to get_status.cpython-38.pyc
+[0.842s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status/image_pub.py to image_pub.cpython-38.pyc
+[0.844s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status/translate_jason_to_list.py to translate_jason_to_list.cpython-38.pyc
+[0.846s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status/__init__.py to __init__.cpython-38.pyc
+[0.848s] running install_data
+[0.849s] creating /home/gy/Omron_MoMa_ROS2/install/tm_get_status/share/ament_index
+[0.849s] creating /home/gy/Omron_MoMa_ROS2/install/tm_get_status/share/ament_index/resource_index
+[0.849s] creating /home/gy/Omron_MoMa_ROS2/install/tm_get_status/share/ament_index/resource_index/packages
+[0.849s] copying resource/tm_get_status -> /home/gy/Omron_MoMa_ROS2/install/tm_get_status/share/ament_index/resource_index/packages
+[0.850s] copying package.xml -> /home/gy/Omron_MoMa_ROS2/install/tm_get_status/share/tm_get_status
+[0.851s] running install_egg_info
+[0.856s] Copying ../../../../build/tm_get_status/tm_get_status.egg-info to /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages/tm_get_status-0.0.1-py3.8.egg-info
+[0.858s] running install_scripts
+[0.886s] Installing image_talker script to /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/tm_get_status
+[0.887s] Installing status_talker script to /home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/tm_get_status
+[0.887s] writing list of installed files to '/home/gy/Omron_MoMa_ROS2/build/tm_get_status/install.log'
+[0.923s] Invoked command in '/home/gy/Omron_MoMa_ROS2/src/Omron_TM_ROS2/src/techman_robot_get_status' returned '0': PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/tm_get_status/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/tm_get_status build --build-base /home/gy/Omron_MoMa_ROS2/build/tm_get_status/build install --prefix /home/gy/Omron_MoMa_ROS2/install/tm_get_status --record /home/gy/Omron_MoMa_ROS2/build/tm_get_status/install.log --single-version-externally-managed

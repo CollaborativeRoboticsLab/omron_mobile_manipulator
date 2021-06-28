@@ -1,0 +1,43 @@
+[0.432s] Invoking command in '/home/gy/Omron_MoMa_ROS2/src/Omron_TM_ROS2/src/pp_marker': PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/pp_marker build --build-base /home/gy/Omron_MoMa_ROS2/build/pp_marker/build install --prefix /home/gy/Omron_MoMa_ROS2/install/pp_marker --record /home/gy/Omron_MoMa_ROS2/build/pp_marker/install.log --single-version-externally-managed
+[0.757s] running egg_info
+[0.758s] creating ../../../../build/pp_marker/pp_marker.egg-info
+[0.758s] writing ../../../../build/pp_marker/pp_marker.egg-info/PKG-INFO
+[0.759s] writing dependency_links to ../../../../build/pp_marker/pp_marker.egg-info/dependency_links.txt
+[0.760s] writing entry points to ../../../../build/pp_marker/pp_marker.egg-info/entry_points.txt
+[0.760s] writing requirements to ../../../../build/pp_marker/pp_marker.egg-info/requires.txt
+[0.760s] writing top-level names to ../../../../build/pp_marker/pp_marker.egg-info/top_level.txt
+[0.763s] writing manifest file '../../../../build/pp_marker/pp_marker.egg-info/SOURCES.txt'
+[0.799s] reading manifest file '../../../../build/pp_marker/pp_marker.egg-info/SOURCES.txt'
+[0.800s] writing manifest file '../../../../build/pp_marker/pp_marker.egg-info/SOURCES.txt'
+[0.800s] running build
+[0.800s] running build_py
+[0.801s] creating /home/gy/Omron_MoMa_ROS2/build/pp_marker/build
+[0.801s] creating /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib
+[0.801s] creating /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker
+[0.803s] copying pp_marker/marker_pub copy.py -> /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker
+[0.804s] copying pp_marker/Modbus.py -> /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker
+[0.804s] copying pp_marker/marker_pub.py -> /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker
+[0.804s] copying pp_marker/__init__.py -> /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker
+[0.805s] running install
+[0.806s] running install_lib
+[0.807s] creating /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker
+[0.807s] copying /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker/marker_pub copy.py -> /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker
+[0.808s] copying /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker/Modbus.py -> /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker
+[0.808s] copying /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker/marker_pub.py -> /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker
+[0.808s] copying /home/gy/Omron_MoMa_ROS2/build/pp_marker/build/lib/pp_marker/__init__.py -> /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker
+[0.809s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker/marker_pub copy.py to marker_pub copy.cpython-38.pyc
+[0.811s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker/Modbus.py to Modbus.cpython-38.pyc
+[0.813s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker/marker_pub.py to marker_pub.cpython-38.pyc
+[0.813s] byte-compiling /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker/__init__.py to __init__.cpython-38.pyc
+[0.813s] running install_data
+[0.813s] creating /home/gy/Omron_MoMa_ROS2/install/pp_marker/share/ament_index
+[0.814s] creating /home/gy/Omron_MoMa_ROS2/install/pp_marker/share/ament_index/resource_index
+[0.814s] creating /home/gy/Omron_MoMa_ROS2/install/pp_marker/share/ament_index/resource_index/packages
+[0.814s] copying resource/pp_marker -> /home/gy/Omron_MoMa_ROS2/install/pp_marker/share/ament_index/resource_index/packages
+[0.818s] copying package.xml -> /home/gy/Omron_MoMa_ROS2/install/pp_marker/share/pp_marker
+[0.818s] running install_egg_info
+[0.820s] Copying ../../../../build/pp_marker/pp_marker.egg-info to /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages/pp_marker-0.0.0-py3.8.egg-info
+[0.821s] running install_scripts
+[0.848s] Installing marker script to /home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/pp_marker
+[0.848s] writing list of installed files to '/home/gy/Omron_MoMa_ROS2/build/pp_marker/install.log'
+[0.880s] Invoked command in '/home/gy/Omron_MoMa_ROS2/src/Omron_TM_ROS2/src/pp_marker' returned '0': PYTHONPATH=/home/gy/Omron_MoMa_ROS2/install/pp_marker/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/pp_marker build --build-base /home/gy/Omron_MoMa_ROS2/build/pp_marker/build install --prefix /home/gy/Omron_MoMa_ROS2/install/pp_marker --record /home/gy/Omron_MoMa_ROS2/build/pp_marker/install.log --single-version-externally-managed

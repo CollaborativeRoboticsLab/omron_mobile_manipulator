@@ -1,0 +1,35 @@
+running egg_info
+creating ../../build/omron_moma/omron_moma.egg-info
+writing ../../build/omron_moma/omron_moma.egg-info/PKG-INFO
+writing dependency_links to ../../build/omron_moma/omron_moma.egg-info/dependency_links.txt
+writing entry points to ../../build/omron_moma/omron_moma.egg-info/entry_points.txt
+writing requirements to ../../build/omron_moma/omron_moma.egg-info/requires.txt
+writing top-level names to ../../build/omron_moma/omron_moma.egg-info/top_level.txt
+writing manifest file '../../build/omron_moma/omron_moma.egg-info/SOURCES.txt'
+reading manifest file '../../build/omron_moma/omron_moma.egg-info/SOURCES.txt'
+writing manifest file '../../build/omron_moma/omron_moma.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/gy/Omron_MoMa_ROS2/build/omron_moma/build
+creating /home/gy/Omron_MoMa_ROS2/build/omron_moma/build/lib
+creating /home/gy/Omron_MoMa_ROS2/build/omron_moma/build/lib/omron_moma
+copying omron_moma/demo.py -> /home/gy/Omron_MoMa_ROS2/build/omron_moma/build/lib/omron_moma
+copying omron_moma/__init__.py -> /home/gy/Omron_MoMa_ROS2/build/omron_moma/build/lib/omron_moma
+running install
+running install_lib
+creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron_moma
+copying /home/gy/Omron_MoMa_ROS2/build/omron_moma/build/lib/omron_moma/demo.py -> /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron_moma
+copying /home/gy/Omron_MoMa_ROS2/build/omron_moma/build/lib/omron_moma/__init__.py -> /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron_moma
+byte-compiling /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron_moma/demo.py to demo.cpython-38.pyc
+byte-compiling /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron_moma/__init__.py to __init__.cpython-38.pyc
+running install_data
+creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/share/ament_index
+creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/share/ament_index/resource_index
+creating /home/gy/Omron_MoMa_ROS2/install/omron_moma/share/ament_index/resource_index/packages
+copying resource/omron_moma -> /home/gy/Omron_MoMa_ROS2/install/omron_moma/share/ament_index/resource_index/packages
+copying package.xml -> /home/gy/Omron_MoMa_ROS2/install/omron_moma/share/omron_moma
+running install_egg_info
+Copying ../../build/omron_moma/omron_moma.egg-info to /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/python3.8/site-packages/omron_moma-0.0.0-py3.8.egg-info
+running install_scripts
+Installing demo script to /home/gy/Omron_MoMa_ROS2/install/omron_moma/lib/omron_moma
+writing list of installed files to '/home/gy/Omron_MoMa_ROS2/build/omron_moma/install.log'

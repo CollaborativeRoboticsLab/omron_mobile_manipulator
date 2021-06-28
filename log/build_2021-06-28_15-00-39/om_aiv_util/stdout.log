@@ -1,0 +1,17 @@
+running develop
+running egg_info
+writing om_aiv_util.egg-info/PKG-INFO
+writing dependency_links to om_aiv_util.egg-info/dependency_links.txt
+writing entry points to om_aiv_util.egg-info/entry_points.txt
+writing requirements to om_aiv_util.egg-info/requires.txt
+writing top-level names to om_aiv_util.egg-info/top_level.txt
+reading manifest file 'om_aiv_util.egg-info/SOURCES.txt'
+writing manifest file 'om_aiv_util.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/python3.8/site-packages/site.py
+Creating /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/python3.8/site-packages/om-aiv-util.egg-link (link to .)
+Installing arcl_api_server script to /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/om_aiv_util
+Installing ld_states_publisher script to /home/gy/Omron_MoMa_ROS2/install/om_aiv_util/lib/om_aiv_util
+
+Installed /home/gy/Omron_MoMa_ROS2/build/om_aiv_util
+running install_data
