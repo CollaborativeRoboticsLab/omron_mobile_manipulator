@@ -24,7 +24,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'demo = omron_moma.demo:main'
+            'demo = omron_moma.demo:main',
+            'test = omron_moma.test:main',
         ],
     },
 )
