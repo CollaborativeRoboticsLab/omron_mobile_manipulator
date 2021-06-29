@@ -3,20 +3,33 @@ import time
 import sys
 import json
 from ament_index_python.packages import get_package_share_directory
+from rclpy import node
 pp_share = get_package_share_directory('pickplace')
 pp_library =  pp_share + '/pickplace/pp_library'
 
 from pp_library import IO, Transform, Script, Move
+from pickplace_msgs import AskModbus
 from rcl_interfaces.srv import SetParameters
 from rcl_interfaces.msg import Parameter, ParameterValue, ParameterType
 from std_msgs.msg import Bool
 
+# Get the coordinates of the new vision base
+def get_base(cli):
+    while not cli.wait_for_service(timeout_sec=1.0):
+        print("Service not available...")
+    req = AskModbus.Request()
+    req.req = 'get_base'
+    future = cli.call_async(req)
+    rclpy.spin_until_future_complete(future)
+    return future.result().position
+
+
 # Get the new pick or place positions w.r.t the new vision base
-def get_positions(listener, modbus, tf, vbase_name, vjob_name):
+def get_positions(listener, cli, tf, vbase_name, vjob_name):
     listener.exit_script()
     listener.change_base(vjob_name)
     time.sleep(0.1)
-    new_vbase = modbus.get_base()
+    new_vbase = get_base(cli)
     time.sleep(0.1)
     listener.change_base("RobotBase")
     time.sleep(0.1)
@@ -59,6 +72,7 @@ def main():
     rclpy.init()
     pickplace_node = rclpy.create_node('pickplace_node')
     flagpublisher = pickplace_node.create_publisher(Bool, 'objectflag', 10)
+    cli = pickplace_node.create_client(AskModbus, 'ask_modbus')
     vjob_name = ""
     view_pick = []
     view_place = []
@@ -74,7 +88,6 @@ def main():
         vbase_place = data['vbase_place']
     
     io = IO.IOClass()
-
     mover = Move.MoveClass()
     listener = Script.ScriptClass()
     tf = Transform.TransformClass()
@@ -88,7 +101,7 @@ def main():
             msg.data = False
             flagpublisher.publish(msg)
             mover.set_position(view_pick)
-            pick, safepick = get_positions(listener, modbus, tf, "vbase_pick", vjob_name)
+            pick, safepick = get_positions(listener, cli, tf, "vbase_pick", vjob_name)
             call_set_parameters(pickplace_node, pick)
             mover.set_position(safepick)
             
@@ -100,7 +113,7 @@ def main():
             mover.set_position(safepick)
 
             mover.set_position(view_place)
-            place, safeplace = get_positions(listener, modbus, tf, "vbase_place", vjob_name)
+            place, safeplace = get_positions(listener, cli, tf, "vbase_place", vjob_name)
             call_set_parameters(pickplace_node, place)
             mover.set_position(safeplace)
             mover.set_position(place)
