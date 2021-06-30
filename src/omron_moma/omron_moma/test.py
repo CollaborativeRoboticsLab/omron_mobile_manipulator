@@ -1,44 +1,119 @@
-import sys
-
-from pickplace_msgs.srv import AskModbus
 import rclpy
-from rclpy.node import Node
+import time
+import sys
+import json
+from ament_index_python.packages import get_package_share_directory
+from rclpy import node
+moma_share = get_package_share_directory('omron_moma')
+pp_library =  get_package_share_directory('pickplace') + '/pickplace/pp_library'
+
+from pp_library import IO, Transform, Script, Move
+from om_aiv_navigation.goto_goal import AmrActionClient
+from pickplace_msgs.srv import AskModbus
+from rcl_interfaces.srv import SetParameters
+
+# Get the coordinates of the new vision base
+def get_base(node, cli):
+    while not cli.wait_for_service(timeout_sec=1.0):
+        print("Service not available...")
+    req = AskModbus.Request()
+    req.req = 'get_base'
+    future = cli.call_async(req)
+    rclpy.spin_until_future_complete(node, future)
+    return future.result().position
 
 
-class ModbusClientAsync(Node):
+# Get the new pick or place positions w.r.t the new vision base
+def get_positions(listener, node, cli, tf, vbase_name, vjob_name):
+    listener.exit_script()
+    listener.change_base(vjob_name)
+    time.sleep(0.1)
+    new_vbase = get_base(node, cli)
+    time.sleep(0.1)
+    listener.change_base("RobotBase")
+    time.sleep(0.1)
+    if (vbase_name == "vbase_pick"):
+        return tf.get_picks(new_vbase, vbase_name)
+    elif (vbase_name == "vbase_place"):
+        return tf.get_places(new_vbase, vbase_name)
+    else:
+        return new_vbase
 
-    def __init__(self):
-        super().__init__('modbus_client_async')
-        self.cli = self.create_client(AskModbus, 'ask_modbus')
-        while not self.cli.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('service not available, waiting again...')
-        self.req = AskModbus.Request()
 
-    def send_request(self):
-        self.future = self.cli.call_async(self.req)
+def main():
+    rclpy.init()
+    pickplace_node = rclpy.create_node('pickplace_node')
+    cli = pickplace_node.create_client(AskModbus, 'ask_modbus')
+    vjob_name = ""
+    view_pick = []
+    view_place = []
+    vbase_pick = []
+    vbase_place = []
+    with open(moma_share + '/config.txt') as json_file:
+        data = json.load(json_file)
+        home_pos = data['home_pos']
+        vjob_name = data['vjob_name']
+        view_pick = data['view_pick']
+        view_place = data['view_place']
+        vbase_pick = data['vbase_pick']
+        vbase_place = data['vbase_place']
 
+    pickplace_node.get_logger().info("Successfully obtained coordinates!")
 
-def main(args=None):
-    rclpy.init(args=args)
+    io = IO.IOClass()
+    mover = Move.MoveClass()
+    listener = Script.ScriptClass()
+    tf = Transform.TransformClass()
+    action_client = AmrActionClient()
 
-    modbus_client = ModbusClientAsync()
-    modbus_client.send_request()
+    listener.wait_tm_connect()
+    tf.add_vbases(vbase_pick, vbase_place)
 
-    while rclpy.ok():
-        rclpy.spin_once(modbus_client)
-        if modbus_client.future.done():
-            try:
-                response = modbus_client.future.result()
-            except Exception as e:
-                modbus_client.get_logger().info(
-                    'Service call failed %r' % (e,))
-            else:
-                modbus_client.get_logger().info(str(response))
-            break
+    try:
+        while True:
+            mover.set_position(view_pick)
+            pickplace_node.get_logger().info("4")
+            pick, safepick = get_positions(listener, pickplace_node, cli, tf, "vbase_pick", vjob_name)
+            mover.set_position(safepick)
+            
+            io.open()
+            mover.set_position(pick)
+            io.close()
+            mover.set_position(safepick)
 
-    modbus_client.destroy_node()
-    rclpy.shutdown()
+            mover.set_position(view_place)
+            place, safeplace = get_positions(listener, pickplace_node, cli, tf, "vbase_place", vjob_name)
+            mover.set_position(safeplace)
+            mover.set_position(place)
+            io.open()
+            mover.set_position(safeplace)
 
+            # goal2result = action_client.send_goal('Goal2')
+
+            # mover.set_position(view_pick)
+            # pickplace_node.get_logger().info("4")
+            # pick, safepick = get_positions(listener, pickplace_node, cli, tf, "vbase_pick", vjob_name)
+            # mover.set_position(safepick)
+            # io.open()
+            # mover.set_position(pick)
+            # io.close()
+            # mover.set_position(safepick)
+
+            # goal1result = action_client.send_goal('Goal1')
+
+            # mover.set_position(view_place)
+            # place, safeplace = get_positions(listener, pickplace_node, cli, tf, "vbase_place", vjob_name)
+            # mover.set_position(safeplace)
+            # mover.set_position(place)
+            # io.open()
+            # mover.set_position(safeplace)
+
+    except KeyboardInterrupt:
+            pickplace_node.get_logger().info("Program shut down!")
+
+    
+    
 
 if __name__ == '__main__':
     main()
+
