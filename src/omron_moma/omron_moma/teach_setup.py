@@ -94,8 +94,7 @@ def main():
     modbus_call(node, cli, 'init_io') #Initialise IO
 
     # Choose to configure for load or unload
-    while mode is not 'load' or 'unload':
-        mode = input("Select \'load\' or \'unload\':")
+    goal = input("Enter goal name:")
 
     # Get the vision base name
     vjob_name = input("Please enter the vision base name: ")
@@ -146,10 +145,10 @@ def main():
     }
 
     # Output the results in a json file
-    with open(moma_share + '/config.txt', 'w') as output:
+    with open(moma_share + '/' + goal + '_config.txt', 'w') as output:
         json.dump(config, output, indent = 3)
 
-    print("Initialisation complete!")
+    print(goal + " initialisation complete!")
 
 if __name__ == '__main__':
     main()
