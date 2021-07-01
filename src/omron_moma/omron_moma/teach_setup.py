@@ -94,7 +94,7 @@ def main():
     modbus_call(node, cli, 'init_io') #Initialise IO
 
     # Choose to configure for load or unload
-    goal = input("Enter goal name:")
+    goal = input("Enter goal name: ")
 
     # Get the vision base name
     vjob_name = input("Please enter the vision base name: ")

@@ -7,7 +7,7 @@ from rclpy import node
 moma_share = get_package_share_directory('omron_moma')
 pp_library =  get_package_share_directory('pickplace') + '/pickplace/pp_library'
 
-from pp_library import IO, Transform, Script, Move
+from pp_library import IO, Transform, Script, Move, Modbus
 from om_aiv_navigation.goto_goal import AmrActionClient
 from pickplace_msgs.srv import AskModbus
 from rcl_interfaces.srv import SetParameters
@@ -90,17 +90,34 @@ def main():
     rclpy.init()
     node = rclpy.create_node('demo_node')
 
+    # Initialise gripper using modbus
+    cli = node.create_client(AskModbus, 'ask_modbus')
+    while not cli.wait_for_service(timeout_sec=1.0):
+        print("Service not available...")
+    req = AskModbus.Request()
+    req.req = 'init_io'
+    future = cli.call_async(req)
+    rclpy.spin_until_future_complete(node, future)
+
     tm_handler = TMHandler(node)
     action_client = AmrActionClient()
 
-    Goal1_coords = Coordinates('Goal2')
-    Goal2_coords = Coordinates('Goal1')
+    # Load the coordinates taught in teach_setup for the respective goals
+    Goal1_coords = Coordinates('Goal1')
+    Goal2_coords = Coordinates('Goal2')
+
     try:
         goal2result = action_client.send_goal('Goal2')
+        if not ("Arrived at" in goal2result):
+            node.get_logger().info("Failed to arrive at goal!")
+            exit()
 
         tm_handler.execute_tm(Goal2_coords)
 
         goal1result = action_client.send_goal('Goal1')
+        if not ("Arrived at" in goal1result):
+            node.get_logger().info("Failed to arrive at goal!")
+            exit()
 
         tm_handler.execute_tm(Goal1_coords)
 
