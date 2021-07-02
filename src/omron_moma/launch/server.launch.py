@@ -31,9 +31,46 @@ def generate_launch_description():
         output='screen',
     )
 
+    arcl_api = Node(
+        package='om_aiv_util',
+        executable='arcl_api_server',
+        #name='arcl_api_server',
+        output='log',
+        parameters=[{
+            'ip_address': "192.168.1.1",
+            'port': 7171,
+            'def_arcl_passwd': "omron"
+        }]
+    )
 
-    return LaunchDescription([ 
-        tm_driver_node, 
-        modbus_server_node
+    ld_states = Node(
+        package='om_aiv_util',
+        executable='ld_states_publisher',
+        #name='ld_states_publi',
+        output='screen',
+        parameters=[{
+            'local_ip': "192.168.1.50",
+            'local_port': 7179
+        }]
+    )
+
+    action_serve = Node(
+        package='om_aiv_navigation',
+        executable='action_server',
+        #name = 'action_server',
+        output='screen',
+        parameters=[{
+            'ip_address': "192.168.1.1",
+            'port': 7171,
+            'def_arcl_passwd': "omron"
+        }]
+    )
+
+    return LaunchDescription([
+        tm_driver_node,
+        modbus_server_node,
+        arcl_api,
+        ld_states,
+        action_serve
         ])
 
