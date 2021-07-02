@@ -7,7 +7,7 @@ from rclpy import node
 moma_share = get_package_share_directory('omron_moma')
 pp_library =  get_package_share_directory('pickplace') + '/pickplace/pp_library'
 
-from pp_library import IO, Transform, Script, Move, Modbus
+from pp_library import Pickplace_Driver, Transform
 from om_aiv_navigation.goto_goal import AmrActionClient
 from pickplace_msgs.srv import AskModbus
 from rcl_interfaces.srv import SetParameters
@@ -56,35 +56,38 @@ class Coordinates:
 class TMHandler:
     def __init__(self, node):
         self.node = node
+        self.pickplace_driver = Pickplace_Driver.PickPlaceClass()
         self.tf = Transform.TransformClass()
-        self.io = IO.IOClass()
-        self.mover = Move.MoveClass()
-        self.listener = Script.ScriptClass()
-
         self.cli = node.create_client(AskModbus, 'ask_modbus')
 
-        self.listener.wait_tm_connect()
+        self.pickplace_driver.wait_tm_connect()
 
 
     def execute_tm(self, coord):
         self.tf.add_vbases(coord.vbase_pick, coord.vbase_place)
 
-        self.mover.set_position(coord.view_pick)
-        pick, safepick = get_positions(self.listener, self.node, self.cli, self.tf, "vbase_pick", coord.vjob_name)
-        self.mover.set_position(safepick)
-        self.io.open()
-        self.mover.set_position(pick)
-        self.io.close()
-        self.mover.set_position(safepick)
+        self.pickplace_driver.set_position(coord.view_pick)
+        if not self.pickplace_driver.error:
+            pick, safepick = get_positions(self.pickplace_driver, self.node, self.cli, self.tf, "vbase_pick", coord.vjob_name)
+            self.pickplace_driver.set_position(safepick)
+            self.pickplace_driver.open()
+            self.pickplace_driver.set_position(pick)
+            self.pickplace_driver.close()
+            self.pickplace_driver.set_position(safepick)
 
-        self.mover.set_position(coord.view_place)
-        place, safeplace = get_positions(self.listener, self.node, self.cli, self.tf, "vbase_place", coord.vjob_name)
-        self.mover.set_position(safeplace)
-        self.mover.set_position(place)
-        self.io.open()
-        self.mover.set_position(safeplace)
+        self.pickplace_driver.set_position(coord.view_place)
+        if not self.pickplace_driver.error:
+            place, safeplace = get_positions(self.pickplace_driver, self.node, self.cli, self.tf, "vbase_place", coord.vjob_name)
+            self.pickplace_driver.set_position(safeplace)
+            self.pickplace_driver.set_position(place)
+            self.pickplace_driver.open()
+            self.pickplace_driver.set_position(safeplace)
 
-        self.mover.set_position(coord.home_pos)
+        self.pickplace_driver.set_position(coord.home_pos)
+
+        if self.pickplace_driver.error:
+            self.node.get_logger().info("TM ERROR, SHUTTING DOWN PROGRAM!")
+            exit()
 
 def main():
     rclpy.init()
@@ -105,7 +108,7 @@ def main():
     # Load the coordinates taught in teach_setup for the respective goals
     Goal1_coords = Coordinates('Goal1')
     Goal2_coords = Coordinates('Goal2')
-
+    
     try:
         goal2result = action_client.send_goal('Goal2')
         if not ("Arrived at" in goal2result):

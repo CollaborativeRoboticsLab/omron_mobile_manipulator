@@ -113,29 +113,46 @@ def generate_launch_description():
         output='screen',
     )
 
+    arcl_api = Node(
+    package='om_aiv_util',
+    executable='arcl_api_server',
+    #name='arcl_api_server',
+    output='log',
+    parameters=[{
+        'ip_address': "192.168.1.1",
+        'port': 7171,
+        'def_arcl_passwd': "omron"
+    }]
+    )
+
+    ld_states = Node(
+        package='om_aiv_util',
+        executable='ld_states_publisher',
+        #name='ld_states_publi',
+        output='screen',
+        parameters=[{
+            'local_ip': "192.168.1.50",
+            'local_port': 7179
+        }]
+    )
     
-
-    # # Pickplace Program
-    # pickplace_node = Node(
-    #     package='pickplace',
-    #     executable='pickplace',
-    #     output='screen'
-    # )
-
-    # # Destination Publisher
-    # marker_publisher_node = Node(
-    #     package='pp_marker',
-    #     executable='marker',
-    #     output='screen'
-    # )
-
+    action_serve = Node(
+        package='om_aiv_navigation',
+        executable='action_server',
+        #name = 'action_server',
+        output='screen',
+        parameters=[{
+            'ip_address': "192.168.1.1",
+            'port': 7171,
+            'def_arcl_passwd': "omron"
+        }]
+    )
+  
     return LaunchDescription([ 
         tm_driver_node, 
-        modbus_server_node
-        #pickplace_node, 
-        #robot_state_publisher, 
-        #static_world, 
-        #rviz_node, 
-        #marker_publisher_node 
+        modbus_server_node,
+        action_serve,
+        ld_states,
+        action_serve
         ])
 

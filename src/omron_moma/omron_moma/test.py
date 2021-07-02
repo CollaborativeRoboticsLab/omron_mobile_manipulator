@@ -7,7 +7,7 @@ from rclpy import node
 moma_share = get_package_share_directory('omron_moma')
 pp_library =  get_package_share_directory('pickplace') + '/pickplace/pp_library'
 
-from pp_library import IO, Transform, Script, Move
+from pp_library import IO, Transform, Script, Move, Modbus
 from om_aiv_navigation.goto_goal import AmrActionClient
 from pickplace_msgs.srv import AskModbus
 from rcl_interfaces.srv import SetParameters
@@ -40,76 +40,91 @@ def get_positions(listener, node, cli, tf, vbase_name, vjob_name):
         return new_vbase
 
 
+# Creates a class for coordinates from the teach_setup config.txt to be initialised
+# The paramater 'mode' will be either 'load' or 'unload'
+class Coordinates:
+    def __init__(self, mode):
+        with open(moma_share + '/' + mode + '_config.txt') as json_file:
+            self.data = json.load(json_file)
+            self.home_pos = self.data['home_pos']
+            self.vjob_name = self.data['vjob_name']
+            self.view_pick = self.data['view_pick']
+            self.view_place = self.data['view_place']
+            self.vbase_pick = self.data['vbase_pick']
+            self.vbase_place = self.data['vbase_place']
+
+class TMHandler:
+    def __init__(self, node):
+        self.node = node
+        self.tf = Transform.TransformClass()
+        self.io = IO.IOClass()
+        self.mover = Move.MoveClass()
+        self.listener = Script.ScriptClass()
+
+        self.cli = node.create_client(AskModbus, 'ask_modbus')
+
+        self.listener.wait_tm_connect()
+
+
+    def execute_tm(self, coord):
+        self.tf.add_vbases(coord.vbase_pick, coord.vbase_place)
+
+        state = self.mover.set_position(coord.view_pick)
+        if not state:
+            exit()
+        pick, safepick = get_positions(self.listener, self.node, self.cli, self.tf, "vbase_pick", coord.vjob_name)
+        self.mover.set_position(safepick)
+        self.io.open()
+        self.mover.set_position(pick)
+        self.io.close()
+        self.mover.set_position(safepick)
+
+        self.mover.set_position(coord.view_place)
+        place, safeplace = get_positions(self.listener, self.node, self.cli, self.tf, "vbase_place", coord.vjob_name)
+        self.mover.set_position(safeplace)
+        self.mover.set_position(place)
+        self.io.open()
+        self.mover.set_position(safeplace)
+
+        self.mover.set_position(coord.home_pos)
+
 def main():
     rclpy.init()
-    pickplace_node = rclpy.create_node('pickplace_node')
-    cli = pickplace_node.create_client(AskModbus, 'ask_modbus')
-    vjob_name = ""
-    view_pick = []
-    view_place = []
-    vbase_pick = []
-    vbase_place = []
-    with open(moma_share + '/config.txt') as json_file:
-        data = json.load(json_file)
-        home_pos = data['home_pos']
-        vjob_name = data['vjob_name']
-        view_pick = data['view_pick']
-        view_place = data['view_place']
-        vbase_pick = data['vbase_pick']
-        vbase_place = data['vbase_place']
+    node = rclpy.create_node('demo_node')
 
-    pickplace_node.get_logger().info("Successfully obtained coordinates!")
+    # Initialise gripper using modbus
+    cli = node.create_client(AskModbus, 'ask_modbus')
+    while not cli.wait_for_service(timeout_sec=1.0):
+        print("Service not available...")
+    req = AskModbus.Request()
+    req.req = 'init_io'
+    future = cli.call_async(req)
+    rclpy.spin_until_future_complete(node, future)
 
-    io = IO.IOClass()
-    mover = Move.MoveClass()
-    listener = Script.ScriptClass()
-    tf = Transform.TransformClass()
+    tm_handler = TMHandler(node)
     action_client = AmrActionClient()
 
-    listener.wait_tm_connect()
-    tf.add_vbases(vbase_pick, vbase_place)
-
+    # Load the coordinates taught in teach_setup for the respective goals
+    Goal1_coords = Coordinates('Goal1')
+    Goal2_coords = Coordinates('Goal2')
+    
     try:
-        while True:
-            mover.set_position(view_pick)
-            pickplace_node.get_logger().info("4")
-            pick, safepick = get_positions(listener, pickplace_node, cli, tf, "vbase_pick", vjob_name)
-            mover.set_position(safepick)
-            
-            io.open()
-            mover.set_position(pick)
-            io.close()
-            mover.set_position(safepick)
+        # goal2result = action_client.send_goal('Goal2')
+        # if not ("Arrived at" in goal2result):
+        #     node.get_logger().info("Failed to arrive at goal!")
+        #     exit()
 
-            mover.set_position(view_place)
-            place, safeplace = get_positions(listener, pickplace_node, cli, tf, "vbase_place", vjob_name)
-            mover.set_position(safeplace)
-            mover.set_position(place)
-            io.open()
-            mover.set_position(safeplace)
+        tm_handler.execute_tm(Goal2_coords)
 
-            # goal2result = action_client.send_goal('Goal2')
+        # goal1result = action_client.send_goal('Goal1')
+        # if not ("Arrived at" in goal1result):
+        #     node.get_logger().info("Failed to arrive at goal!")
+        #     exit()
 
-            # mover.set_position(view_pick)
-            # pickplace_node.get_logger().info("4")
-            # pick, safepick = get_positions(listener, pickplace_node, cli, tf, "vbase_pick", vjob_name)
-            # mover.set_position(safepick)
-            # io.open()
-            # mover.set_position(pick)
-            # io.close()
-            # mover.set_position(safepick)
-
-            # goal1result = action_client.send_goal('Goal1')
-
-            # mover.set_position(view_place)
-            # place, safeplace = get_positions(listener, pickplace_node, cli, tf, "vbase_place", vjob_name)
-            # mover.set_position(safeplace)
-            # mover.set_position(place)
-            # io.open()
-            # mover.set_position(safeplace)
+        # tm_handler.execute_tm(Goal1_coords)
 
     except KeyboardInterrupt:
-            pickplace_node.get_logger().info("Program shut down!")
+            node.get_logger().info("Program shut down!")
 
     
     
