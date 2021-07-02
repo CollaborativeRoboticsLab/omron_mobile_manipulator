@@ -42,7 +42,10 @@ The 2 submodules are:
 +
 .. link:https://github.com/guanyewtan/Omron_TM_ROS2[Omron_TM_ROS2]
 + 
-This 
+
+git clone --recurse-submodules https://github.com/guanyewtan/Omron_MoMa_ROS2.git
+
+
 
 Omron_TM_ROS2 and Omron_AMR_ROS2. These packages can be used individually to control the TM machine and Autonomous Mobile Robot respectively, and the `omron_moma` package utilises both of them to control the Mobile Manipulator.
 
