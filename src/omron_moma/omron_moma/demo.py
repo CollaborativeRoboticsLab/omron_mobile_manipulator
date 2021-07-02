@@ -54,9 +54,9 @@ class Coordinates:
             self.vbase_place = self.data['vbase_place']
 
 class TMHandler:
-    def __init__(self, node):
+    def __init__(self, node, pickplace_driver):
         self.node = node
-        self.pickplace_driver = Pickplace_Driver.PickPlaceClass()
+        self.pickplace_driver = pickplace_driver
         self.tf = Transform.TransformClass()
         self.cli = node.create_client(AskModbus, 'ask_modbus')
 
@@ -65,6 +65,8 @@ class TMHandler:
 
     def execute_tm(self, coord):
         self.tf.add_vbases(coord.vbase_pick, coord.vbase_place)
+
+        self.pickplace_driver.set_position(coord.home_pos)
 
         self.pickplace_driver.set_position(coord.view_pick)
         if not self.pickplace_driver.error:
@@ -101,13 +103,15 @@ def main():
     req.req = 'init_io'
     future = cli.call_async(req)
     rclpy.spin_until_future_complete(node, future)
-
-    tm_handler = TMHandler(node)
+    pickplace_driver = Pickplace_Driver.PickPlaceClass()
+    tm_handler = TMHandler(node, pickplace_driver)
     action_client = AmrActionClient()
 
     # Load the coordinates taught in teach_setup for the respective goals
     Goal1_coords = Coordinates('Goal1')
     Goal2_coords = Coordinates('Goal2')
+
+    pickplace_driver.set_position(Goal1_coords.home_pos)
     
     try:
         goal2result = action_client.send_goal('Goal2')
