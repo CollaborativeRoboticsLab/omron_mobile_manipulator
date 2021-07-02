@@ -25,7 +25,6 @@ setup(
     entry_points={
         'console_scripts': [
             'demo = omron_moma.demo:main',
-            'test = omron_moma.test:main',
             'teach_setup = omron_moma.teach_setup:main',
         ],
     },
