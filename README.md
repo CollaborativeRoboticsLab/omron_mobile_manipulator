@@ -1,3 +1,3 @@
 # Omron_MoMa
 
-Check out the Developer Guide for more information!
+Check out the [Developer's Guide](docs/DeveloperGuide.adoc) for more information!
