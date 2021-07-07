@@ -73,40 +73,48 @@ To set up ROS2 across the host and remote machine, ensure that both the remote m
 The host machine is used to run the nodes which enable communication with the TM robot via tcp and modbus communication.
 It is also used to communicate with the AMR via the ARCL interface in order to retrieve vital information about the AMR that is used for this package to work.
 
-// ==== IP Address
-// Ensure that the ip address of the host machine and the TM robot(<<TM System/Network Setup>>) have the same subnet. Instructions on how to change the static ip address in Ubuntu 20.04 can be found link:https://www.linuxtechi.com/assign-static-ip-address-ubuntu-20-04-lts/#:~:text=Assign%20Static%20IP%20Address%20on%20Ubuntu%2020.04%20LTS%20Desktop&text=Login%20to%20your%20desktop%20environment,and%20then%20choose%20wired%20settings.&text=In%20the%20next%20window%2C%20Choose,gateway%20and%20DNS%20Server%20IP.[here]
 
+==== Host Machine ROS 2 Package Set Up
+Once you have your network set up correctly, you need to set up our ROS 2 package to work correctly in your host machine.
 
-// ==== Host Machine ROS 2 Package Set Up
-// Once you have your network set up correctly, you need to set up our ROS 2 package to work correctly in your host machine.
+First, make sure you have installed ROS 2 as described in <<prerequisites>>.
 
-// First, make sure you have installed ROS 2 as described in <<prerequisites>>.
-
-// . Clone this repository to a directory of your choice with: 
-// +
-// ....
-// cd <directory>
-// git clone https://github.com/guanyewtan/Omron_TM_ROS2
-// ....
-// . Enter the folder with:
-// +
-// ....
-// cd Omron_TM_ROS2
-// ....
-// . Build all package with:
-// +
-// ....
-// colcon build --symlink-install
-// ....
-// +
-// > Depending on your machine, this can take a while to build.
-// If you receive a warning saying "no such command", follow the intructions link:https://docs.ros.org/en/foxy/Tutorials/Colcon-Tutorial.html#install-colcon[here].
-
-// [NOTE]
-// You might need to install some missing packages if you didn't already have them. They can be installed with `sudo apt install ros-foxy-control-msgs`.
+. Clone this repository to a directory of your choice with: 
++
+....
+cd <directory>
+git clone --recurse-submodules https://github.com/zach-goh/Omron_MoMa_ROS2.git
+....
++
+[NOTE]
+If you pass --recurse-submodules to the git clone command, it will automatically initialize and update each submodule in the repository.
+. Enter the folder with:
++
+....
+cd Omron_MoMa_ROS2
+....
+. Build all package and source the setup.bash file:
++
+....
+colcon build --symlink-install
+source install/setup.bash
+....
++
+[NOTE]
+Depending on your machine, this can take a while to build.
+If you receive a warning saying "no such command", follow the intructions link:https://docs.ros.org/en/foxy/Tutorials/Colcon-Tutorial.html#install-colcon[here].
+You might need to install some missing packages if you didn't already have them. They can be installed with `sudo apt install ros-foxy-control-msgs`.
++
+. Run the nodes for the host machine:
++
+....
+ros2 launch omron_moma server.launch.py robot_ip:=<ip address of TM machine>
+....
++
+This will launch the nodes for communication with the TM and the AMR.
 
 // ==== TM ROS 2 Driver Setup/Usage
-
+// 
 // . Enter your ROS 2 workspace and source the ROS2 environment:
 // +
 // ```
@@ -199,9 +207,51 @@ It is also used to communicate with the AMR via the ARCL interface in order to r
 // |===
 
 
-// == Implementation
-// === Pickplace Program
-// The pickplace package allows the user to easily create a pick and place program, requiring only a one time setup. The pickplace program will then continuously run a vision guided pick and place operation.
+== Implementation
+=== Demo Program
+The omron_moma package allows the user to create a load and unload program, requiring only a one time setup. The demo program will then run a vision guided load and unload operation at 2 different goals.
+
+*To run the demo program, ensure that:*
+
+. The requirements in <<prerequisites>> have been met.
+
+. `server.launch.py` has been launched on the host machine.
+
+. There are 2 goals set for the AMR, one called 'Goal1' and the other called 'Goal2'.
+
+. The load and unload motion has been taught. This can be done by running
++
+....
+ros2 run omron_moma teach_setup <ip address of TM>
+....
++
+[NOTE]
+This teach_setup.py file *is different from the one in the pickplace package*. This one requires the user to enter the name of the goal that the pick and place motion will be carried out at. For example, if the pick and place motion is done at Goal1, the user will be prompted to enter 'Goal1' when running the setup. Everything else works the same.
+
+
+==== Running the demo program
+
+. Enter the folder with:
++
+....
+cd Omron_MoMa_ROS2
+....
+. Build all package and source the setup.bash file:
++
+....
+colcon build --symlink-install
+source install/setup.bash
+....
++
+. *Make sure the TM program is running, either in auto or manual mode*
++
+. Run the demo script:
++
+....
+ros2 run omron_moma demo <ip address of TM>
+....
+
+The MoMa should move to Goal2, execute a pick and place motion, then move to Goal1 and execute a pick and place motion.
 
 // [NOTE]
 // This implementation was designed using a TM Landmark attached to the object to be picked, and another TM landmark to find the place location. However, it is possible for the TM vision to locate other visual features on objects.
