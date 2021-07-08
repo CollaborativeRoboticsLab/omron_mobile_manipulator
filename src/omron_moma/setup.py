@@ -13,6 +13,9 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name, glob('robot_description/urdf/*')),
+        ('share/' + package_name, glob('robot_description/meshes/chassis/*')),
+        ('share/' + package_name, glob('robot_description/config/*')),
         (os.path.join('share', package_name), glob('launch/*')),
     ],
     install_requires=['setuptools'],
@@ -25,7 +28,7 @@ setup(
     entry_points={
         'console_scripts': [
             'demo = omron_moma.demo:main',
-            'teach_setup = omron_moma.teach_setup:main',
+            'teach_setup = omron_moma.teach_setup:main'
         ],
     },
 )
