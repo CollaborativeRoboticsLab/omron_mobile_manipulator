@@ -157,3 +157,26 @@ ros2 run omron_moma demo <ip address of TM>
 ....
 
 The MoMa should move to Goal2, execute a pick and place motion, then move to Goal1 and execute a pick and place motion.
+
+
+==== Running the visualization program
+. Enter the folder with:
+....
+cd Omron_MoMa_ROS2
+....
+. Build all package and source the setup.bash file:
++
+....
+colcon build --symlink-install
+source install/setup.bash
+....
++
+. *Make sure the server program is running on the host PC, either in auto or manual mode*
++
+. Run the demo script:
++
+....
+ros2 launch omron_moma visualization.launch.py
+....
+
+An RViz window should launch with the MoMa and the corresponding map data.
