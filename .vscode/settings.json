@@ -1,0 +1,14 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/zeon/turtlebot3_ws/build/turtlebot3_teleop",
+        "/home/zeon/turtlebot3_ws/install/turtlebot3_teleop/lib/python3.8/site-packages",
+        "/home/zeon/turtlebot3_ws/build/turtlebot3_example",
+        "/home/zeon/turtlebot3_ws/install/turtlebot3_example/lib/python3.8/site-packages",
+        "/home/zeon/turtlebot3_ws/install/turtlebot3_msgs/lib/python3.8/site-packages",
+        "/home/zeon/turtlebot3_ws/install/dynamixel_sdk_custom_interfaces/lib/python3.8/site-packages",
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ]
+}

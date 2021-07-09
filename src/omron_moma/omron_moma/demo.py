@@ -4,6 +4,7 @@ import sys
 import json
 from ament_index_python.packages import get_package_share_directory
 from rclpy import node
+from std_msgs.msg import Bool
 moma_share = get_package_share_directory('omron_moma')
 pp_library =  get_package_share_directory('pickplace') + '/pickplace/pp_library'
 
@@ -59,6 +60,7 @@ class TMHandler:
         self.pickplace_driver = pickplace_driver
         self.tf = Transform.TransformClass()
         self.cli = node.create_client(AskModbus, 'ask_modbus')
+        self.flagpublisher = self.node.create_publisher(Bool, 'objectflag', 10)
 
         self.pickplace_driver.wait_tm_connect()
 
@@ -75,6 +77,9 @@ class TMHandler:
             self.pickplace_driver.open()
             self.pickplace_driver.set_position(pick)
             self.pickplace_driver.close()
+            msg = Bool()
+            msg.data = True
+            self.flagpublisher.publish(msg)
             self.pickplace_driver.set_position(safepick)
 
         self.pickplace_driver.set_position(coord.view_place)
@@ -83,6 +88,9 @@ class TMHandler:
             self.pickplace_driver.set_position(safeplace)
             self.pickplace_driver.set_position(place)
             self.pickplace_driver.open()
+            msg = Bool()
+            msg.data = False
+            self.flagpublisher.publish(msg)
             self.pickplace_driver.set_position(safeplace)
 
         self.pickplace_driver.set_position(coord.home_pos)

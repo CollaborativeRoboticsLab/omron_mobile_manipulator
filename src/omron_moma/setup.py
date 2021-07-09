@@ -15,6 +15,8 @@ setup(
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name, glob('robot_description/urdf/*')),
         ('share/' + package_name, glob('robot_description/meshes/chassis/*')),
+        ('share/' + package_name, glob('robot_description/tm12_1300/meshes/collision/*')),
+        ('share/' + package_name, glob('robot_description/tm12_1300/meshes/visual/*')),
         ('share/' + package_name, glob('robot_description/config/*')),
         (os.path.join('share', package_name), glob('launch/*')),
     ],

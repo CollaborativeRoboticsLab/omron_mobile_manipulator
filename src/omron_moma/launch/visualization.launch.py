@@ -26,7 +26,7 @@ def generate_launch_description():
             args.append(sys.argv[i])
             i = i + 1
 
-    robot_description_config = load_file('omron_moma', 'MoMa.urdf')
+    robot_description_config = load_file('omron_moma', 'MoMa_TM12.urdf')
     #robot_description_config = load_file('amr_visualisation', 'urdf/AMR_Platform.urdf')
     robot_description = {'robot_description' : robot_description_config}
 
@@ -47,17 +47,6 @@ def generate_launch_description():
         executable='joints_publisher',
         output='screen',
     )
-    	
-    ld_states = Node(
-        package='om_aiv_util',
-        executable='ld_states_publisher',
-        #name='ld_states_publi',
-        output='screen',
-        parameters=[{
-            'local_ip': "192.168.1.50",
-            'local_port': 7179
-        }]
-    )    
     
     # Publish Robot
     robot_state_publisher = Node(
@@ -91,14 +80,20 @@ def generate_launch_description():
         executable='goals_marker',
         output='screen',
     )
+    
+    marker_publisher_node = Node(
+        package='pp_marker',
+        executable='marker',
+        output='screen'
+    )
 
     return LaunchDescription([
     	rviz_node,
-        ld_states,
         robot_state_publisher,
         joints_publisher_node,
         static_world,
         goals_node,
+        marker_publisher_node,
         data_points_node
         ])
 
