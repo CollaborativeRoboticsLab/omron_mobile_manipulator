@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
@@ -16,6 +17,20 @@ def load_file(package_name, file_path):
             return file.read()
     except EnvironmentError: # parent of IOError, OSError *and* WindowsError where available
         return None
+    
+def load_json(package_name, file_path):
+    package_path = get_package_share_directory(package_name)
+    absolute_file_path = os.path.join(package_path, file_path)
+
+    try:
+        with open(absolute_file_path, 'r') as file:
+            return json.load(file)
+    except EnvironmentError: # parent of IOError, OSError *and* WindowsError where available
+        return None
+    
+# Function to convert roll, pitch and yaw to rviz readable format
+def rpy_to_ypr(obj):
+    return [obj[0], obj[1], obj[2], obj[5], obj[4], obj[3]]
 
 def generate_launch_description():
     args = []
@@ -26,6 +41,18 @@ def generate_launch_description():
             args.append(sys.argv[i])
             i = i + 1
 
+    goal1_pp_data = load_json("omron_moma", "Goal1_config.txt")
+    goal1_viewpick = goal1_pp_data['view_pick']
+    goal1_viewplace = goal1_pp_data['view_place']
+    goal2_pp_data = load_json("omron_moma", "Goal2_config.txt")
+    goal2_viewpick = goal2_pp_data['view_pick']
+    goal2_viewplace = goal2_pp_data['view_place']
+    
+    goal1_viewpick = [str(i) for i in rpy_to_ypr(goal1_viewpick)] + ['tm_base', 'goal1_viewpick']
+    goal1_viewplace = [str(i) for i in rpy_to_ypr(goal1_viewplace)] + ['tm_base', 'goal1_viewplace']
+    goal2_viewpick = [str(i) for i in rpy_to_ypr(goal2_viewpick)] + ['tm_base', 'goal2_viewpick']
+    goal2_viewplace = [str(i) for i in rpy_to_ypr(goal2_viewplace)] + ['tm_base', 'goal2_viewplace']
+    
     robot_description_config = load_file('omron_moma', 'MoMa_TM12.urdf')
     #robot_description_config = load_file('amr_visualisation', 'urdf/AMR_Platform.urdf')
     robot_description = {'robot_description' : robot_description_config}
@@ -48,7 +75,7 @@ def generate_launch_description():
         output='screen',
     )
     
-    # Publish Robot
+    # Robot state publisher
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -57,7 +84,7 @@ def generate_launch_description():
         parameters=[robot_description],
     )
     
-    # Static TF
+    # Publisher linking the entire robot to "world"
     static_world = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
@@ -81,10 +108,43 @@ def generate_launch_description():
         output='screen',
     )
     
+    # Cube marker for pickplace operation
     marker_publisher_node = Node(
         package='pp_marker',
         executable='marker',
         output='screen'
+    )
+    
+    goal1_static_viewpick = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='goal1_viewpick_publisher',
+        output='log',
+        arguments= goal1_viewpick
+    )
+    
+    goal1_static_viewplace = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='goal1_viewplace_publisher',
+        output='log',
+        arguments= goal1_viewplace
+    )
+    
+    goal2_static_viewpick = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='goal2_viewpick_publisher',
+        output='log',
+        arguments= goal2_viewpick
+    )
+    
+    goal2_static_viewplace = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='goal2_viewplace_publisher',
+        output='log',
+        arguments= goal2_viewplace
     )
 
     return LaunchDescription([
@@ -94,6 +154,10 @@ def generate_launch_description():
         static_world,
         goals_node,
         marker_publisher_node,
-        data_points_node
+        data_points_node,
+        goal1_static_viewpick,
+        goal1_static_viewplace,
+        goal2_static_viewpick,
+        goal2_static_viewplace
         ])
 
