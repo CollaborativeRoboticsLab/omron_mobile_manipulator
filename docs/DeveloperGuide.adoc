@@ -22,9 +22,9 @@ endif::[]
 :url-repo: https://github.com/guanyewtan/Omron_MoMa_ROS2
 :url-ug: https://github.com/guanyewtan/Omron_MoMa_ROS2
 
-Last updated: `2 July 2021` 
+Last updated: `12 July 2021` 
 
-Authors: `Tan Guan Yew`(link:https://github.com/guanyewtan[guanyewtan]) 
+Authors: `Tan Guan Yew`(link:https://github.com/guanyewtan[guanyewtan]) and `Zeon Chua Feiyi`(link:https://github.com/CFZeon[CFZeon])
 
 
 == Getting Started
@@ -48,7 +48,10 @@ This submodule manages the Autonomous Mobile Robot (AMR), and contains packages 
 
 These packages can be used individually to control the TM machine and Autonomous Mobile Robot respectively, and the `omron_moma` package utilises both of them to control the Mobile Manipulator.
 
-In order to run the `omron_moma` package, *ensure that the requirements and setup for running Omron_TM_ROS2 (link:https://github.com/guanyewtan/Omron_TM_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) and Omron_AMR_ROS2 (link:https://github.com/guanyewtan/Omron_AMR_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) have been met.*
+In order to run the `omron_moma` package, *ensure that the requirements and setup for running Omron_TM_ROS2 (link:https://github.com/guanyewtan/Omron_TM_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) and Omron_AMR_ROS2 (link:https://github.com/guanyewtan/Omron_AMR_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) have been met or this package may not work.*
+
+[WARNING]
+Test both packages individually to ensure that they are both functional or errors might be hard to diagnose in the MoMa package.
 
 
 === Hardware Connection
@@ -57,23 +60,28 @@ The diagram below shows the hardware connection of the MoMa.
 .Hardware Connection
 image::hardware_connection.png[]
 
-The Intel NUC, AMR and TM robot are all connected to the ethernet switching hub via ethernet cable. *Ensure that the 3 machines are able to communicate with each other on the same subnet, e.g. 192.168.1.x with subnet mask 255.255.255.0.*
+The Intel NUC, AMR and TM robot are all connected to the ethernet switching hub via ethernet cable. *Ensure that the 3 machines are able to communicate with each other on the same subnet, e.g. 192.168.1.x with subnet mask 255.255.255.0.* You can check if they are connected by pinging their respective ip in a terminal using `ping 192.168.1.x`
 
 === ROS2 Across Multiple Machines
-The `omron_moma` package has been designed to run across 2 machine; the host machine, which runs the nodes for communication with the TM robot and the AMR, as well as the remote machine, which runs the high level scripts/clients to execute jobs on the MoMa. 
+The `omron_moma` package has been designed to run across 2 machines: The host machine, which runs the ROS nodes to allow communication with the TM robot and the AMR, and the remote machine, which runs the high level scripts to execute jobs on the MoMa utilising ROS clients. 
 
+[NOTE]
 To set up ROS2 across the host and remote machine, ensure that both the remote machine and host machine are on the same subnet and are discoverable to each other.
 
-*Also ensure that the ROS_DOMAIN_ID of both devices are the same.*
+[NOTE]
+Also ensure that the ROS_DOMAIN_ID of both devices are the same. This can be done by adding `export ROS_DOMAIN_ID=[number of choice]` to the .bashrc file and ensures that the ROS nodes between the 2 devices are discoverable.
 
 
 === Set Up Host Machine
-The host machine is used to run the nodes which enable communication with the TM robot via tcp and modbus communication.
-It is also used to communicate with the AMR via the ARCL interface in order to retrieve vital information about the AMR that is used for this package to work.
+The host machine is used to run the ROS nodes which enable communication with the TM robot via tcp and modbus communication.
+It is also used to communicate with the AMR via the ARCL interface in order to send commands and retrieve information about the AMR status.
+
+[NOTE]
+Ensure that the host machine is fully booted with ROS nodes publishing properly before turning the TM robot on as this may cause the Modbus to be improperly initialized on the TM.
 
 
 ==== Host Machine ROS 2 Package Set Up
-Once you have your network set up correctly, you need to set up our ROS 2 package to work correctly in your host machine.
+Once you have your network set up correctly, you need to set up this ROS 2 package to work correctly on your host machine.
 
 First, make sure you have installed ROS 2 as described in <<prerequisites>>.
 
@@ -85,13 +93,13 @@ git clone --recurse-submodules https://github.com/zach-goh/Omron_MoMa_ROS2.git
 ....
 +
 [NOTE]
-If you pass --recurse-submodules to the git clone command, it will automatically initialize and update each submodule in the repository.
+If you pass --recurse-submodules to the git clone command, it will initialize and update all submodules in the repository.
 . Enter the folder with:
 +
 ....
 cd Omron_MoMa_ROS2
 ....
-. Build all package and source the setup.bash file:
+. Build all packages and source the setup.bash file:
 +
 ....
 colcon build --symlink-install
@@ -109,12 +117,14 @@ You might need to install some missing packages if you didn't already have them.
 ros2 launch omron_moma server.launch.py robot_ip:=<ip address of TM machine>
 ....
 +
-This will launch the nodes for communication with the TM and the AMR.
+This will launch the nodes for communication with the TM robot and the AMR.
 
+[NOTE]
+Ensure that the TM robot is turned on before running the server launch script as a connection is required to properly initialize the Modbus.
 
 == Implementation
 === Demo Program
-The omron_moma package allows the user to create a load and unload program, requiring only a one time setup. The demo program will then run a vision guided load and unload operation at 2 different goals.
+The omron_moma package allows the user to create a load and unload program, requiring a setup. The demo program will then run a vision guided load and unload operation at 2 different goals.
 
 *To run the demo program, ensure that:*
 
@@ -124,31 +134,31 @@ The omron_moma package allows the user to create a load and unload program, requ
 
 . There are 2 goals set for the AMR, one called 'Goal1' and the other called 'Goal2'.
 
-. The load and unload motion has been taught. This can be done by running
+. The load and unload motion has been taught. This can be done by running for each of the respective goals,
 +
 ....
 ros2 run omron_moma teach_setup <ip address of TM>
 ....
 +
 [NOTE]
-This teach_setup.py file *is different from the one in the pickplace package*. This one requires the user to enter the name of the goal that the pick and place motion will be carried out at. For example, if the pick and place motion is done at Goal1, the user will be prompted to enter 'Goal1' when running the setup. Everything else works the same.
+The teach_setup.py file for the MoMa *is different from the TM robot setup in the pickplace package*. This setup requires an extra step for typing in goal names to dictate the location of the pick and place operation. The rest of the instructions for the setup can be found in the documentation in Omron_TM_ROS2 repository.
 
 
-==== Running the demo program
+==== Running the demo programs
 
 . Enter the folder with:
 +
 ....
 cd Omron_MoMa_ROS2
 ....
-. Build all package and source the setup.bash file:
+. Build all packages and source the setup.bash file:
 +
 ....
 colcon build --symlink-install
 source install/setup.bash
 ....
 +
-. *Make sure the TM program is running, either in auto or manual mode*
+. *Make sure the TM program from the Omron_TM_ROS2 is running, either in auto or manual mode*
 +
 . Run the demo script:
 +
@@ -156,7 +166,7 @@ source install/setup.bash
 ros2 run omron_moma demo <ip address of TM>
 ....
 
-The MoMa should move to Goal2, execute a pick and place motion, then move to Goal1 and execute a pick and place motion.
+The MoMa should move to *Goal2*, execute a pick and place motion, then move to *Goal1* and execute a pick and place motion.
 
 
 ==== Running the visualization program
@@ -170,13 +180,24 @@ cd Omron_MoMa_ROS2
 colcon build --symlink-install
 source install/setup.bash
 ....
+[NOTE]
+If this is your first time building this package, it will take awhile.
 +
-. *Make sure the server program is running on the host PC, either in auto or manual mode*
+. *Make sure the server program is running properly on the host PC*
 +
-. Run the demo script:
+. Run the visualization script:
 +
 ....
 ros2 launch omron_moma visualization.launch.py
 ....
 
 An RViz window should launch with the MoMa and the corresponding map data.
+
+[NOTE]
+There are models for the TM5-900 and the TM12-1300 already configured. To change between these, change the `robot_description_config` variable in `visualization.launch.py` under the MoMa package to use `MoMa.urdf` or `MoMa_TM12.urdf` respectively.
+
+[WARNING]
+If the visualization is not appearing as it should, check if the robot publisher topics are present with `ros2 topic list -t`. You can verify that it is indeed working properly if it appears similar to the screenshot below.
+
+.RViz vizualisation of MoMa
+image::visualization_moma.png[RViz visualization]
