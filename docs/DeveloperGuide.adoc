@@ -48,10 +48,8 @@ This submodule manages the Autonomous Mobile Robot (AMR), and contains packages 
 
 These packages can be used individually to control the TM machine and Autonomous Mobile Robot respectively, and the `omron_moma` package utilises both of them to control the Mobile Manipulator.
 
-In order to run the `omron_moma` package, *ensure that the requirements and setup for running Omron_TM_ROS2 (link:https://github.com/guanyewtan/Omron_TM_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) and Omron_AMR_ROS2 (link:https://github.com/guanyewtan/Omron_AMR_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) have been met or this package may not work.*
-
 [WARNING]
-Test both packages individually to ensure that they are both functional or errors might be hard to diagnose in the MoMa package.
+In order to run the `omron_moma` package, *ensure that the requirements and setup for running Omron_TM_ROS2 (link:https://github.com/guanyewtan/Omron_TM_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) and Omron_AMR_ROS2 (link:https://github.com/guanyewtan/Omron_AMR_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) have been met or this package may not work.* Test both packages individually to ensure functionality.
 
 
 === Hardware Connection
@@ -85,7 +83,7 @@ In our hardware connection, the host machine is an Intel NUC. However, any on-bo
 ==== Host Machine ROS 2 Package Set Up
 Once you have your network set up correctly, you need to set up this ROS 2 package to work correctly on your host machine.
 
-First, make sure you have installed ROS 2 as described in <<prerequisites>>.
+First, ensure you have installed ROS 2 as described in <<prerequisites>>.
 
 . Clone this repository to a directory of your choice with: 
 +
@@ -178,6 +176,14 @@ Here is an example of what the demo program and visualization does if all the st
 .A video demonstration of the demo program
 video::MoMa_rviz_demo.mp4[]
 
+ifdef::env-github[]
+image::https://i.ytimg.com/vi/w-HQAl3RuZI/hqdefault.jpg[https://youtu.be/w-HQAl3RuZI]
+endif::[]
+
+ifndef::env-github[]
+video::w-HQAl3RuZI[youtube]
+endif::[]
+
 ==== Running the demo programs
 
 . Enter the folder with:
@@ -231,7 +237,7 @@ An RViz window should launch with the MoMa and the corresponding map data.
 There are models for the TM5-900 and the TM12-1300 already configured. To change between these, change the `robot_description_config` variable in `visualization.launch.py` under the MoMa package to use `MoMa.urdf` or `MoMa_TM12.urdf` respectively.
 
 [WARNING]
-If the visualization is not appearing as it should, check if the robot publisher topics are present with `ros2 topic list -t`. You can verify that it is indeed working properly if it appears similar to the screenshot below.
+If the visualization is not appearing as it should, check if the robot publisher topics are present with `ros2 topic list -t`. You can verify that the visualization is working properly if it appears similar to the screenshot below.
 
 .RViz vizualisation of MoMa
 image::visualization_moma.png[RViz visualization]
