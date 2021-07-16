@@ -173,14 +173,8 @@ image::goal_name.jpeg[]
 ==== Demo program example
 Here is an example of what the demo program and visualization does if all the steps are done correctly.
 
-.A video demonstration of the demo program
-ifdef::env-github[]
-image:https://i.ytimg.com/vi/w-HQAl3RuZI/hqdefault.jpg[link=https://youtu.be/w-HQAl3RuZI]
-endif::[]
-
-ifndef::env-github[]
-video::MoMa_rviz_demo.mp4[]
-endif::[]
+.A live demonstration of the demo program
+image::omron_moma_rviz_demo.gif[]
 
 ==== Running the demo programs
 
