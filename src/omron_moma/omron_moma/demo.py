@@ -44,6 +44,7 @@ def get_positions(listener, node, cli, tf, vbase_name, vjob_name):
     else:
         return new_vbase
 
+# Set the destination transform location
 def call_set_parameters(node, coordinates):
     # create client
     client = node.create_client(
@@ -70,6 +71,7 @@ def call_set_parameters(node, coordinates):
             "'{args.node_name}': {e}".format_map(locals()))
     return response
 
+# Gets the transform between two frames in the transform tree
 def get_lookup_transform(node, source, target):
     temp_buffer = tf2_ros.Buffer()
     dur = Duration()
@@ -181,34 +183,13 @@ def main():
     # Set the TM to move to the designated home position
     pickplace_driver.set_position(Goal1_coords.home_pos)
     
-    try:        
-        ##
-        zero = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        call_set_parameters(node, zero)
-        flagpublisher = node.create_publisher(MoveCube, 'objectflag', 10)
-        temp_transform = get_lookup_transform(node, "pose", "world")
-        msg = MoveCube()
-        msg.parent = "world"
-        msg.coordinates = temp_transform
-        flagpublisher.publish(msg)
-        ##
+    try:     
         goal2result = action_client.send_goal('Goal2')
         if not ("Arrived at" in goal2result):
             node.get_logger().info("Failed to arrive at goal!")
             exit()
 
         tm_handler.execute_tm(Goal2_coords)
-
-        ##
-        zero = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        call_set_parameters(node, zero)
-        flagpublisher = node.create_publisher(MoveCube, 'objectflag', 10)
-        temp_transform = get_lookup_transform(node, "world", "marker")
-        msg = MoveCube()
-        msg.parent = "world"
-        msg.coordinates = temp_transform
-        flagpublisher.publish(msg)
-        ##
         
         goal1result = action_client.send_goal('Goal1')
         if not ("Arrived at" in goal1result):
@@ -219,10 +200,10 @@ def main():
         zero = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         call_set_parameters(node, zero)
         flagpublisher = node.create_publisher(MoveCube, 'objectflag', 10)
-        temp_transform = get_lookup_transform(node, "world", "marker")
+        #temp_transform = get_lookup_transform(node, "world", "marker")
         msg = MoveCube()
         msg.parent = "world"
-        msg.coordinates = temp_transform
+        msg.coordinates = zero
         flagpublisher.publish(msg)
 
     except KeyboardInterrupt:

@@ -58,9 +58,9 @@ Test both packages individually to ensure that they are both functional or error
 The diagram below shows the hardware connection of the MoMa. 
 
 .Hardware Connection
-image::hardware_connection.png[]
+image::hardware_connection_new.png[]
 
-The Intel NUC, AMR and TM robot are all connected to the ethernet switching hub via ethernet cable. *Ensure that the 3 machines are able to communicate with each other on the same subnet, e.g. 192.168.1.x with subnet mask 255.255.255.0.* You can check if they are connected by pinging their respective ip in a terminal using `ping 192.168.1.x`
+The Intel NUC, AMR and TM robot are all connected to the ethernet switching hub via ethernet cable. *Ensure that the 3 machines are able to communicate with each other on the same subnet, e.g. 192.168.1.x with subnet mask 255.255.255.0.* You can check if they are connected by pinging their respective ip in a terminal using `ping 192.168.1.x`. Also check if your remote PC can ping your On-board PC.
 
 === ROS2 Across Multiple Machines
 The `omron_moma` package has been designed to run across 2 machines: The host machine, which runs the ROS nodes to allow communication with the TM robot and the AMR, and the remote machine, which runs the high level scripts to execute jobs on the MoMa utilising ROS clients. 
@@ -69,7 +69,7 @@ The `omron_moma` package has been designed to run across 2 machines: The host ma
 To set up ROS2 across the host and remote machine, ensure that both the remote machine and host machine are on the same subnet and are discoverable to each other.
 
 [NOTE]
-Also ensure that the ROS_DOMAIN_ID of both devices are the same. This can be done by adding `export ROS_DOMAIN_ID=[number of choice]` to the .bashrc file and ensures that the ROS nodes between the 2 devices are discoverable.
+Also ensure that the ROS_DOMAIN_ID of both devices are the same. This can be done by adding `export ROS_DOMAIN_ID=[number of choice]` to the .bashrc file and ensures that the ROS nodes between the 2 devices are discoverable on the same network.
 
 
 === Set Up Host Machine
@@ -77,7 +77,9 @@ The host machine is used to run the ROS nodes which enable communication with th
 It is also used to communicate with the AMR via the ARCL interface in order to send commands and retrieve information about the AMR status.
 
 [NOTE]
-Ensure that the host machine is fully booted with ROS nodes publishing properly before turning the TM robot on as this may cause the Modbus to be improperly initialized on the TM.
+
+In our hardware connection, the host machine is an Intel NUC. However, any on-board PC i.e. Raspberry Pi, a laptop running Ubuntu 20.04. that can run ROS2 Foxy and maintain an ethernet connection with the TM Robot and the AMR is sufficient.
+
 
 
 ==== Host Machine ROS 2 Package Set Up
@@ -110,7 +112,7 @@ source install/setup.bash
 Depending on your machine, this can take a while to build.
 If you receive a warning saying "no such command", follow the intructions link:https://docs.ros.org/en/foxy/Tutorials/Colcon-Tutorial.html#install-colcon[here].
 You might need to install some missing packages if you didn't already have them. They can be installed with `sudo apt install ros-foxy-control-msgs`.
-+
+
 . Run the nodes for the host machine:
 +
 ....
@@ -120,7 +122,31 @@ ros2 launch omron_moma server.launch.py robot_ip:=<ip address of TM machine>
 This will launch the nodes for communication with the TM robot and the AMR.
 
 [NOTE]
-Ensure that the TM robot is turned on before running the server launch script as a connection is required to properly initialize the Modbus.
+Ensure that the host machine is fully booted with ROS nodes publishing properly before turning the TM robot on as this may cause the Modbus to be improperly initialized on the TM.
+
+===== Launching server script on host machine on startup
+It is possible to launch the server scripts on the host machine on startup using crontab and a bash script.
+
+
+. Open a new terminal and type in
++
+....
+sudo crontab -e
+....
++
+. Direct crontab to your bash file on reboot with
++
+....
+@reboot <bash_file_directory>/<bash_file_name>.sh
+....
++
+. In your bash file source ros2 and the package, then launch the server file
++
+....
+source /opt/ros/foxy/setup.bash
+source <workspace directory>/Omron_MoMa_ROS2/install/setup.bash
+ros2 launch omron_moma server.launch.py robot_ip:=<TM_robot_IP>
+....
 
 == Implementation
 === Demo Program
@@ -143,6 +169,14 @@ ros2 run omron_moma teach_setup <ip address of TM>
 [NOTE]
 The teach_setup.py file for the MoMa *is different from the TM robot setup in the pickplace package*. This setup requires an extra step for typing in goal names to dictate the location of the pick and place operation. The rest of the instructions for the setup can be found in the documentation in Omron_TM_ROS2 repository.
 
+.Addition of Goal Step
+image::goal_name.jpeg[]
+
+==== Demo program example
+Here is an example of what the demo program and visualization does if all the steps are done correctly.
+
+.A video demonstration of the demo program
+video::MoMa_rviz_demo.mp4[]
 
 ==== Running the demo programs
 
