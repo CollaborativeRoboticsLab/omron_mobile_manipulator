@@ -177,11 +177,11 @@ Here is an example of what the demo program and visualization does if all the st
 video::MoMa_rviz_demo.mp4[]
 
 ifdef::env-github[]
-image::https://i.ytimg.com/vi/w-HQAl3RuZI/hqdefault.jpg[https://youtu.be/w-HQAl3RuZI]
+image:https://i.ytimg.com/vi/w-HQAl3RuZI/hqdefault.jpg[https://youtu.be/w-HQAl3RuZI]
 endif::[]
 
 ifndef::env-github[]
-video::w-HQAl3RuZI[youtube]
+video::MoMa_rviz_demo.mp4[]
 endif::[]
 
 ==== Running the demo programs
