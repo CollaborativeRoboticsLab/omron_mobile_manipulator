@@ -174,10 +174,8 @@ image::goal_name.jpeg[]
 Here is an example of what the demo program and visualization does if all the steps are done correctly.
 
 .A video demonstration of the demo program
-video::MoMa_rviz_demo.mp4[]
-
 ifdef::env-github[]
-image:https://i.ytimg.com/vi/w-HQAl3RuZI/hqdefault.jpg[https://youtu.be/w-HQAl3RuZI]
+image:https://i.ytimg.com/vi/w-HQAl3RuZI/hqdefault.jpg[link=https://youtu.be/w-HQAl3RuZI]
 endif::[]
 
 ifndef::env-github[]
