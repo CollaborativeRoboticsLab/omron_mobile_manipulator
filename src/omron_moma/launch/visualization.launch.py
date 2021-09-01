@@ -53,7 +53,8 @@ def generate_launch_description():
     goal2_viewpick = [str(i) for i in rpy_to_ypr(goal2_viewpick)] + ['tm_base', 'goal2_viewpick']
     goal2_viewplace = [str(i) for i in rpy_to_ypr(goal2_viewplace)] + ['tm_base', 'goal2_viewplace']
     
-    robot_description_config = load_file('omron_moma', 'MoMa_TM12.urdf')
+    #robot_description_config = load_file('omron_moma', 'MoMa_TM12.urdf')
+    robot_description_config = load_file('omron_moma', 'MoMa.urdf')
     #robot_description_config = load_file('amr_visualisation', 'urdf/AMR_Platform.urdf')
     robot_description = {'robot_description' : robot_description_config}
 
@@ -146,6 +147,34 @@ def generate_launch_description():
         output='log',
         arguments= goal2_viewplace
     )
+    
+    # RViz goto point node
+    goto_point_node = Node(
+        package='om_aiv_navigation',
+        executable='goto_point',
+        output='screen',
+    )
+    
+    # RViz goto point node
+    localize_at_point_node = Node(
+        package='om_aiv_navigation',
+        executable='localize_at_point',
+        output='screen',
+    )
+    
+    map_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='world_publisher',
+        output='log',
+        arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'map', 'pose']
+    )
+    
+    laser_scans_node = Node(
+        package='amr_visualisation',
+        executable='laser_scans',
+        output='screen',
+    )
 
     return LaunchDescription([
     	rviz_node,
@@ -153,11 +182,15 @@ def generate_launch_description():
         joints_publisher_node,
         static_world,
         goals_node,
-        marker_publisher_node,
         data_points_node,
         goal1_static_viewpick,
         goal1_static_viewplace,
         goal2_static_viewpick,
-        goal2_static_viewplace
+        goal2_static_viewplace,
+        goto_point_node,
+        localize_at_point_node,
+        map_node,
+        laser_scans_node,
+        marker_publisher_node
         ])
 

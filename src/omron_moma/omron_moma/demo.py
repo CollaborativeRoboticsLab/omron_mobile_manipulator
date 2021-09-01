@@ -70,30 +70,6 @@ def call_set_parameters(node, coordinates):
             'Exception while calling service of node '
             "'{args.node_name}': {e}".format_map(locals()))
     return response
-
-# Gets the transform between two frames in the transform tree
-def get_lookup_transform(node, source, target):
-    temp_buffer = tf2_ros.Buffer()
-    dur = Duration()
-    dur.sec = 10
-    dur.nsec = 0
-    temp_listener = tf2_ros.TransformListener(buffer=temp_buffer, node=node, spin_thread=True)
-    time.sleep(1.0)
-    temp_tf = Transform.TransformClass()
-    while rclpy.ok():
-        try:
-            node.get_logger().info("unbork")
-            temp_buffer.wait_for_transform_async(target, source, node.get_clock().now().to_msg())
-            transform = temp_buffer.lookup_transform(target, source, node.get_clock().now().to_msg(), dur)
-            print(transform)
-            if transform is not None:
-                node.get_logger().info("unborkened")
-                break
-        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-            node.get_logger().info("bork")
-        node.get_logger().info("While loop2")
-        
-    return temp_tf.stamped_to_euler(transform)
     
 # Creates a class for coordinates from the teach_setup config.txt to be initialised
 # The paramater 'mode' will be either 'load' or 'unload'
@@ -183,6 +159,10 @@ def main():
     # Set the TM to move to the designated home position
     pickplace_driver.set_position(Goal1_coords.home_pos)
     
+    # Initialize transform listener
+    temp_buffer = tf2_ros.Buffer()
+    temp_listener = tf2_ros.TransformListener(buffer=temp_buffer, node=node, spin_thread=True)
+    
     try:     
         goal2result = action_client.send_goal('Goal2')
         if not ("Arrived at" in goal2result):
@@ -200,14 +180,13 @@ def main():
         zero = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         call_set_parameters(node, zero)
         flagpublisher = node.create_publisher(MoveCube, 'objectflag', 10)
-        #temp_transform = get_lookup_transform(node, "world", "marker")
         msg = MoveCube()
         msg.parent = "world"
         msg.coordinates = zero
         flagpublisher.publish(msg)
 
     except KeyboardInterrupt:
-            node.get_logger().info("Program shut down!")
+        node.get_logger().info("Program shut down!")
 
     
     

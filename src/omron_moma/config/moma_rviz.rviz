@@ -9,7 +9,7 @@ Panels:
         - /TF1
         - /RobotModel1
       Splitter Ratio: 0.5
-    Tree Height: 607
+    Tree Height: 787
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -51,15 +51,21 @@ Visualization Manager:
         All Enabled: true
         EOAT:
           Value: true
-        base:
+        amr_main_body:
           Value: true
         base_link:
           Value: true
         chassis:
           Value: true
-        destination:
+        flange:
           Value: true
-        flange_link:
+        goal1_viewpick:
+          Value: true
+        goal1_viewplace:
+          Value: true
+        goal2_viewpick:
+          Value: true
+        goal2_viewplace:
           Value: true
         left_back_small_wheel:
           Value: true
@@ -67,23 +73,7 @@ Visualization Manager:
           Value: true
         left_wheel:
           Value: true
-        link_0:
-          Value: true
-        link_1:
-          Value: true
-        link_2:
-          Value: true
-        link_3:
-          Value: true
-        link_4:
-          Value: true
-        link_5:
-          Value: true
-        link_6:
-          Value: true
-        main_body:
-          Value: true
-        marker:
+        map:
           Value: true
         pose:
           Value: true
@@ -93,7 +83,21 @@ Visualization Manager:
           Value: true
         right_wheel:
           Value: true
-        tool0:
+        tm_base:
+          Value: true
+        tm_link_0:
+          Value: true
+        tm_link_1:
+          Value: true
+        tm_link_2:
+          Value: true
+        tm_link_3:
+          Value: true
+        tm_link_4:
+          Value: true
+        tm_link_5:
+          Value: true
+        tm_link_6:
           Value: true
         world:
           Value: true
@@ -103,39 +107,44 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        pose:
-          base_link:
-            base:
+        map:
+          pose:
+            base_link:
+              amr_main_body:
+                chassis:
+                  tm_base:
+                    goal1_viewpick:
+                      {}
+                    goal1_viewplace:
+                      {}
+                    goal2_viewpick:
+                      {}
+                    goal2_viewplace:
+                      {}
+                    tm_link_0:
+                      tm_link_1:
+                        tm_link_2:
+                          tm_link_3:
+                            tm_link_4:
+                              tm_link_5:
+                                tm_link_6:
+                                  flange:
+                                    EOAT:
+                                      {}
+                left_back_small_wheel:
+                  {}
+                left_front_small_wheel:
+                  {}
+                left_wheel:
+                  {}
+                right_back_small_wheel:
+                  {}
+                right_front_small_wheel:
+                  {}
+                right_wheel:
+                  {}
+            world:
               {}
-            main_body:
-              chassis:
-                link_0:
-                  link_1:
-                    link_2:
-                      link_3:
-                        link_4:
-                          link_5:
-                            link_6:
-                              flange_link:
-                                EOAT:
-                                  marker:
-                                    {}
-                                tool0:
-                                  {}
-              left_back_small_wheel:
-                {}
-              left_front_small_wheel:
-                {}
-              left_wheel:
-                {}
-              right_back_small_wheel:
-                {}
-              right_front_small_wheel:
-                {}
-              right_wheel:
-                {}
-          world:
-            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -161,10 +170,11 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base:
+        amr_main_body:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
@@ -174,7 +184,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        flange_link:
+        flange:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -189,46 +199,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link_6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        main_body:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -248,10 +218,45 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        tool0:
+        tm_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        tm_link_0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tm_link_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tm_link_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tm_link_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tm_link_4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tm_link_5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tm_link_6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       TF Prefix: ""
       Update Interval: 0
@@ -261,7 +266,8 @@ Visualization Manager:
       Enabled: true
       Name: MarkerArray
       Namespaces:
-        {}
+        goal_texts: true
+        goals: true
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -273,9 +279,9 @@ Visualization Manager:
       Enabled: true
       Name: Marker
       Namespaces:
-        lines: true
+        goal_texts: true
+        goals: true
         ls_points: true
-        points: true
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -299,7 +305,7 @@ Visualization Manager:
       Enabled: true
       Name: Marker
       Namespaces:
-        cube: true
+        {}
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -325,6 +331,26 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /goal_pose
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_grid
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_grid_updates
+      Use Timestamp: false
       Value: true
   Enabled: true
   Global Options:
@@ -369,39 +395,39 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 9.507649421691895
+      Distance: 15.163017272949219
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -2.426175117492676
+        Y: -2.360657215118408
+        Z: -0.9623174071311951
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.1403979063034058
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.8703982830047607
+      Yaw: 3.9485833644866943
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 836
+  Height: 1016
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000040000000000000156000002eafc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000002ea000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002eafc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003d000002ea000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000002e7000002ea00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000001560000039efc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d0000039e000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000039efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003d0000039e000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000004c70000039e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Tool Properties:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1368
+  Width: 1848
   X: 72
   Y: 27

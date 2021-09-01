@@ -23,8 +23,16 @@ def generate_launch_description():
         executable='demo',
         output='screen'
     )
+    
+    # Destination Publisher
+    destination_publisher_node = Node(
+        package='pickplace',
+        executable='destination_publisher',
+        output='screen'
+    )
 
     return LaunchDescription([ 
         moma_node, 
+        destination_publisher_node
         ])
 
