@@ -46,7 +46,7 @@ def generate_launch_description():
     ld_states = Node(
         package='om_aiv_util',
         executable='ld_states_publisher',
-        #name='ld_states_publi',
+        #name='ld_states_publisher',
         output='screen',
         parameters=[{
             'local_ip': "192.168.1.50",

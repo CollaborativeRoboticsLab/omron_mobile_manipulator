@@ -10,7 +10,7 @@ from rclpy.duration import Duration
 moma_share = get_package_share_directory('omron_moma')
 pp_library =  get_package_share_directory('pickplace') + '/pickplace/pp_library'
 
-from pp_library import Pickplace_Driver, Transform
+from pp_library import Pickplace_Driver, Transform, TM_Exception
 from om_aiv_navigation.goto_goal import AmrActionClient
 from pickplace_msgs.srv import AskModbus
 from pickplace_msgs.msg import MoveCube
@@ -70,7 +70,7 @@ def call_set_parameters(node, coordinates):
             'Exception while calling service of node '
             "'{args.node_name}': {e}".format_map(locals()))
     return response
-    
+
 # Creates a class for coordinates from the teach_setup config.txt to be initialised
 # The paramater 'mode' will be either 'load' or 'unload'
 class Coordinates:
@@ -159,10 +159,6 @@ def main():
     # Set the TM to move to the designated home position
     pickplace_driver.set_position(Goal1_coords.home_pos)
     
-    # Initialize transform listener
-    temp_buffer = tf2_ros.Buffer()
-    temp_listener = tf2_ros.TransformListener(buffer=temp_buffer, node=node, spin_thread=True)
-    
     try:     
         goal2result = action_client.send_goal('Goal2')
         if not ("Arrived at" in goal2result):
@@ -187,6 +183,8 @@ def main():
 
     except KeyboardInterrupt:
         node.get_logger().info("Program shut down!")
+    except TM_Exception.TM_Exception as e:
+        node.get_logger().error(str(e))
 
     
     
