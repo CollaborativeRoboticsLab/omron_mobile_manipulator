@@ -167,6 +167,9 @@ ros2 run omron_moma teach_setup <ip address of TM>
 [NOTE]
 The teach_setup.py file for the MoMa *is different from the TM robot setup in the pickplace package*. This setup requires an extra step for typing in goal names to dictate the location of the pick and place operation. The rest of the instructions for the setup can be found in the documentation in Omron_TM_ROS2 repository.
 
+[WARNING]
+Do not set any 2 positions of the TM to be in the same spot. This will cause a bug in the service client to make the program wait for 20 seconds
+
 .Addition of Goal Step
 image::goal_name.jpeg[]
 

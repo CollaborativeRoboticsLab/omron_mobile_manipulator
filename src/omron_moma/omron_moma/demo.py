@@ -97,9 +97,7 @@ class TMHandler:
     # Executes the pickplace sequence at the designated goal
     def execute_tm(self, coord):
         self.tf.add_vbases(coord.vbase_pick, coord.vbase_place)
-
-        self.pickplace_driver.set_position(coord.home_pos)
-
+     
         self.pickplace_driver.set_position(coord.view_pick)
         if not self.pickplace_driver.error:
             pick, safepick = get_positions(self.pickplace_driver, self.node, self.cli, self.tf, "vbase_pick", coord.vjob_name)
@@ -107,6 +105,7 @@ class TMHandler:
             msg = MoveCube()
             msg.parent = "tm_base"
             msg.coordinates = pick
+            msg.coordinates[2] -= 0.15
             self.flagpublisher.publish(msg)
             self.pickplace_driver.set_position(safepick)
             self.pickplace_driver.open()
@@ -127,6 +126,7 @@ class TMHandler:
             msg = MoveCube()
             msg.parent = "tm_base"
             msg.coordinates = place
+            msg.coordinates[2] -= 0.15
             self.flagpublisher.publish(msg)
             self.pickplace_driver.set_position(safeplace)
 
