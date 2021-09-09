@@ -22,7 +22,7 @@ endif::[]
 :url-repo: https://github.com/guanyewtan/Omron_MoMa_ROS2
 :url-ug: https://github.com/guanyewtan/Omron_MoMa_ROS2
 
-Last updated: `12 July 2021` 
+Last updated: `9 September 2021` 
 
 Authors: `Tan Guan Yew`(link:https://github.com/guanyewtan[guanyewtan]) and `Zeon Chua Feiyi`(link:https://github.com/CFZeon[CFZeon])
 
@@ -47,6 +47,9 @@ This submodule manages the TM robot, and contains packages to control and visual
 This submodule manages the Autonomous Mobile Robot (AMR), and contains packages to control and visualise the robot model in RViz.
 
 These packages can be used individually to control the TM machine and Autonomous Mobile Robot respectively, and the `omron_moma` package utilises both of them to control the Mobile Manipulator.
+
+[NOTE]
+To ensure that the submodules used are the most recent commits, navigate to each one individually with `cd src/Omron_TM_ROS2` and `cd src/Omron_AMR_ROS2` then type `git fetch`, followed by `git pull` right after cloning this repository
 
 [WARNING]
 In order to run the `omron_moma` package, *ensure that the requirements and setup for running Omron_TM_ROS2 (link:https://github.com/guanyewtan/Omron_TM_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) and Omron_AMR_ROS2 (link:https://github.com/guanyewtan/Omron_AMR_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) have been met or this package may not work.* Test both packages individually to ensure functionality.
