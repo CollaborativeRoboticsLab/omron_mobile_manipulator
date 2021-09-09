@@ -17,6 +17,9 @@ from pickplace_msgs.msg import MoveCube
 from rcl_interfaces.srv import SetParameters
 from rcl_interfaces.msg import Parameter, ParameterValue, ParameterType
 
+start_goal = 'Goal2'
+end_goal = 'Goal1'
+
 # Get the coordinates of the new vision base
 def get_base(node, cli):
     while not cli.wait_for_service(timeout_sec=1.0):
@@ -100,34 +103,47 @@ class TMHandler:
      
         self.pickplace_driver.set_position(coord.view_pick)
         if not self.pickplace_driver.error:
+            # get positions of the pick operation
             pick, safepick = get_positions(self.pickplace_driver, self.node, self.cli, self.tf, "vbase_pick", coord.vjob_name)
+            # set the parameters of the flange destination
             call_set_parameters(self.node, pick)
+            # sets the cube display to appear at the pick location
             msg = MoveCube()
             msg.parent = "tm_base"
             msg.coordinates = pick
             msg.coordinates[2] -= 0.15
             self.flagpublisher.publish(msg)
+            # moves the grippers above the object and open the grippers
             self.pickplace_driver.set_position(safepick)
             self.pickplace_driver.open()
+            # moves the grippers down to the object picking location and close the grippers
             self.pickplace_driver.set_position(pick)
             self.pickplace_driver.close()
+            # sets marker to be joined to the end effector
             msg.parent = "EOAT"
             msg.coordinates = pick
             self.flagpublisher.publish(msg)
+            # moves the gripper back to above the object
             self.pickplace_driver.set_position(safepick)
 
         self.pickplace_driver.set_position(coord.view_place)
         if not self.pickplace_driver.error:
+            # get positions of the place operation
             place, safeplace = get_positions(self.pickplace_driver, self.node, self.cli, self.tf, "vbase_place", coord.vjob_name)
+            # set the parameters of the flange destination
             call_set_parameters(self.node, place)
+            # moves the gripper to above the place location
             self.pickplace_driver.set_position(safeplace)
+            # moves the gripper to the place location and open the grippers
             self.pickplace_driver.set_position(place)
             self.pickplace_driver.open()
+            # sets the cube display to appear at the place location
             msg = MoveCube()
             msg.parent = "tm_base"
             msg.coordinates = place
             msg.coordinates[2] -= 0.15
             self.flagpublisher.publish(msg)
+            # moves the gripper back to above the object
             self.pickplace_driver.set_position(safeplace)
 
         self.pickplace_driver.set_position(coord.home_pos)

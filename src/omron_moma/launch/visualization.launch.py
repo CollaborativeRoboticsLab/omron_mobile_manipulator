@@ -175,6 +175,13 @@ def generate_launch_description():
         executable='laser_scans',
         output='screen',
     )
+    
+    # Destination Publisher
+    destination_publisher_node = Node(
+        package='pickplace',
+        executable='destination_publisher',
+        output='screen'
+    )
 
     return LaunchDescription([
     	rviz_node,
@@ -191,6 +198,7 @@ def generate_launch_description():
         localize_at_point_node,
         map_node,
         laser_scans_node,
-        marker_publisher_node
+        marker_publisher_node,
+        destination_publisher_node
         ])
 

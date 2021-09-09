@@ -156,7 +156,7 @@ The omron_moma package allows the user to create a load and unload program, requ
 
 . `server.launch.py` has been launched on the host machine.
 
-. There are 2 goals set for the AMR, one called 'Goal1' and the other called 'Goal2'.
+. There are 2 goals set for the AMR, one called 'Goal1' and the other called 'Goal2'. The demo will fail if the AMR is missing these goals.
 
 . The load and unload motion has been taught. This can be done by running for each of the respective goals,
 +
@@ -202,6 +202,9 @@ ros2 run omron_moma demo <ip address of TM>
 ....
 
 The MoMa should move to *Goal2*, execute a pick and place motion, then move to *Goal1* and execute a pick and place motion.
+
+[NOTE]
+Should you wish to use your own goal names, teach_setup must be done for those goals. The names for start_goal and end_goal would also have to be changed in demo.py
 
 
 ==== Running the visualization program
