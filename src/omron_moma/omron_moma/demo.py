@@ -28,6 +28,14 @@ def get_base(node, cli):
     rclpy.spin_until_future_complete(node, future)
     return future.result().position
 
+def get_current_pos(node, cli):
+    while not cli.wait_for_service(timeout_sec=1.0):
+        print("Service not available...")
+    req = AskModbus.Request()
+    req.req = 'get_pos'
+    future = cli.call_async(req)
+    rclpy.spin_until_future_complete(node, future)
+    return future.result().position
 
 # Get the new pick or place positions w.r.t the new vision base
 def get_positions(listener, node, cli, tf, vbase_name, vjob_name):
@@ -138,7 +146,7 @@ class TMHandler:
         self.flagpublisher = self.node.create_publisher(MoveCube, 'objectflag', 10)
 
         self.pickplace_driver.wait_tm_connect()
-        
+      
     # Executes the pickplace sequence at the designated goal
     def execute_tm(self, coord):
         self.tf.add_vbases(coord.vbase_pick, coord.vbase_place)
@@ -194,6 +202,19 @@ class TMHandler:
             self.node.get_logger().info("TM ERROR, SHUTTING DOWN PROGRAM!")
             exit()
 
+"""
+Check if the tm is moving to the same location
+"""
+def check_same_positions(current, goal):
+    if (round(current[0]/1000, 3) == round(goal[0],3) and
+        round(current[1]/1000, 3) == round(goal[1],3) and
+        round(current[2]/1000, 3) == round(goal[2],3) and
+        round(current[3]/57.2958, 3) == round(goal[3],3) and
+        round(current[4]/57.2958, 3) == round(goal[4],3) and
+        round(current[5]/57.2958, 3) == round(goal[5],3)):
+            return True
+    return False
+
 def main():
     rclpy.init()
     node = rclpy.create_node('demo_node')
@@ -216,7 +237,11 @@ def main():
     Goal2_coords = Coordinates(start_goal)
 
     # Set the TM to move to the designated home position
-    pickplace_driver.set_position(Goal1_coords.home_pos)
+    current_position = get_current_pos(node, cli)
+    if not check_same_positions(current_position, Goal1_coords.home_pos):
+        # node.get_logger().info(str(current_position))
+        # node.get_logger().info(str(Goal1_coords.home_pos))
+        pickplace_driver.set_position(Goal1_coords.home_pos)
     
     try:     
         goal2result = action_client.send_goal(start_goal)
