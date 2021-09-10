@@ -161,7 +161,6 @@ class TMHandler:
             msg = MoveCube()
             msg.parent = "tm_base"
             msg.coordinates = pick
-            msg.coordinates[2] -= 0.15
             self.flagpublisher.publish(msg)
             # moves the grippers above the object and open the grippers
             self.pickplace_driver.set_position(safepick)
@@ -191,7 +190,6 @@ class TMHandler:
             msg = MoveCube()
             msg.parent = "tm_base"
             msg.coordinates = place
-            msg.coordinates[2] -= 0.15
             self.flagpublisher.publish(msg)
             # moves the gripper back to above the object
             self.pickplace_driver.set_position(safeplace)
