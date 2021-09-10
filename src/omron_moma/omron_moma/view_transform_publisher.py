@@ -31,13 +31,9 @@ class ViewTransformPublisher(rclpy.node.Node):
         self.broadcasterplace.sendTransform(self.viewplacetransform)
         
     def set_viewpick(self, msg):
-        self.get_logger().info("VIEWPICK SET NOW NOW NOW")
-        #self.get_logger().info(msg)
         self.viewpicktransform.transform = msg.transform
         
     def set_viewplace(self, msg):
-        self.get_logger().info("VIEWPLACE SET NOW NOW NOW")
-        #self.get_logger().info(msg)
         self.viewplacetransform.transform = msg.transform
         
         
