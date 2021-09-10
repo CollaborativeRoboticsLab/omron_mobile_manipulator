@@ -29,7 +29,8 @@ setup(
     entry_points={
         'console_scripts': [
             'demo = omron_moma.demo:main',
-            'teach_setup = omron_moma.teach_setup:main'
+            'teach_setup = omron_moma.teach_setup:main',
+            'view_publisher = omron_moma.view_transform_publisher:main'
         ],
     },
 )

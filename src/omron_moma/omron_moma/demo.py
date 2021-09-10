@@ -1,12 +1,9 @@
 import rclpy
 import time
-import sys
+import math
 import json
 import tf2_ros
 from ament_index_python.packages import get_package_share_directory
-from rclpy import node
-from std_msgs.msg import Bool
-from rclpy.duration import Duration
 moma_share = get_package_share_directory('omron_moma')
 pp_library =  get_package_share_directory('pickplace') + '/pickplace/pp_library'
 
@@ -14,6 +11,7 @@ from pp_library import Pickplace_Driver, Transform, TM_Exception
 from om_aiv_navigation.goto_goal import AmrActionClient
 from pickplace_msgs.srv import AskModbus
 from pickplace_msgs.msg import MoveCube
+from geometry_msgs.msg import TransformStamped
 from rcl_interfaces.srv import SetParameters
 from rcl_interfaces.msg import Parameter, ParameterValue, ParameterType
 
@@ -47,6 +45,27 @@ def get_positions(listener, node, cli, tf, vbase_name, vjob_name):
     else:
         return new_vbase
 
+"""
+    -INPUT IS IN mm AND deg, SO IT IS CONVERTED TO m AND rad HERE
+Converts euler roll, pitch, yaw to quaternion
+quat = [w, x, y, z]
+"""
+def quaternion_from_euler(roll, pitch, yaw):
+    cy = math.cos(yaw * 0.5)
+    sy = math.sin(yaw * 0.5)
+    cp = math.cos(pitch * 0.5)
+    sp = math.sin(pitch * 0.5)
+    cr = math.cos(roll * 0.5)
+    sr = math.sin(roll * 0.5)
+
+    q = [0] * 4
+    q[0] = cy * cp * cr + sy * sp * sr #w
+    q[1] = cy * cp * sr - sy * sp * cr #x
+    q[2] = sy * cp * sr + cy * sp * cr #y
+    q[3] = sy * cp * cr - cy * sp * sr #z
+
+    return q
+
 # Set the destination transform location
 def call_set_parameters(node, coordinates):
     # create client
@@ -73,6 +92,29 @@ def call_set_parameters(node, coordinates):
             'Exception while calling service of node '
             "'{args.node_name}': {e}".format_map(locals()))
     return response
+
+
+def publish_view(Goal_coords, viewpick_pub, viewplace_pub):
+    transform = TransformStamped()
+    transform.transform.translation.x = Goal_coords.view_pick[0]
+    transform.transform.translation.y = Goal_coords.view_pick[1]
+    transform.transform.translation.z = Goal_coords.view_pick[2]
+    temp = quaternion_from_euler(Goal_coords.view_pick[3], Goal_coords.view_pick[4], Goal_coords.view_pick[5])
+    transform.transform.rotation.w = temp[0]
+    transform.transform.rotation.x = temp[1]
+    transform.transform.rotation.y = temp[2]
+    transform.transform.rotation.z = temp[3]
+    viewpick_pub.publish(transform)
+    transform.transform.translation.x = Goal_coords.view_place[0]
+    transform.transform.translation.y = Goal_coords.view_place[1]
+    transform.transform.translation.z = Goal_coords.view_place[2]
+    temp = quaternion_from_euler(Goal_coords.view_place[3], Goal_coords.view_place[4], Goal_coords.view_place[5])
+    transform.transform.rotation.w = temp[0]
+    transform.transform.rotation.x = temp[1]
+    transform.transform.rotation.y = temp[2]
+    transform.transform.rotation.z = temp[3]
+    viewplace_pub.publish(transform)
+    
 
 # Creates a class for coordinates from the teach_setup config.txt to be initialised
 # The paramater 'mode' will be either 'load' or 'unload'
@@ -167,27 +209,28 @@ def main():
     pickplace_driver = Pickplace_Driver.PickPlaceClass()
     tm_handler = TMHandler(node, pickplace_driver)
     action_client = AmrActionClient()
-
+    viewpickpub = node.create_publisher(TransformStamped, 'view_pick', 10)
+    viewplacepub = node.create_publisher(TransformStamped, 'view_place', 10)
     # Load the coordinates taught in teach_setup for the respective goals
-    Goal1_coords = Coordinates('Goal1')
-    Goal2_coords = Coordinates('Goal2')
+    Goal1_coords = Coordinates(end_goal)
+    Goal2_coords = Coordinates(start_goal)
 
     # Set the TM to move to the designated home position
     pickplace_driver.set_position(Goal1_coords.home_pos)
     
     try:     
-        goal2result = action_client.send_goal('Goal2')
+        goal2result = action_client.send_goal(start_goal)
         if not ("Arrived at" in goal2result):
             node.get_logger().info("Failed to arrive at goal!")
             exit()
-
+        publish_view(Goal2_coords, viewpickpub, viewplacepub)
         tm_handler.execute_tm(Goal2_coords)
         
-        goal1result = action_client.send_goal('Goal1')
+        goal1result = action_client.send_goal(end_goal)
         if not ("Arrived at" in goal1result):
             node.get_logger().info("Failed to arrive at goal!")
             exit()
-
+        publish_view(Goal1_coords, viewpickpub, viewplacepub)
         tm_handler.execute_tm(Goal1_coords)
         zero = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         call_set_parameters(node, zero)

@@ -41,18 +41,6 @@ def generate_launch_description():
             args.append(sys.argv[i])
             i = i + 1
 
-    goal1_pp_data = load_json("omron_moma", "Goal1_config.txt")
-    goal1_viewpick = goal1_pp_data['view_pick']
-    goal1_viewplace = goal1_pp_data['view_place']
-    goal2_pp_data = load_json("omron_moma", "Goal2_config.txt")
-    goal2_viewpick = goal2_pp_data['view_pick']
-    goal2_viewplace = goal2_pp_data['view_place']
-    
-    goal1_viewpick = [str(i) for i in rpy_to_ypr(goal1_viewpick)] + ['tm_base', 'goal1_viewpick']
-    goal1_viewplace = [str(i) for i in rpy_to_ypr(goal1_viewplace)] + ['tm_base', 'goal1_viewplace']
-    goal2_viewpick = [str(i) for i in rpy_to_ypr(goal2_viewpick)] + ['tm_base', 'goal2_viewpick']
-    goal2_viewplace = [str(i) for i in rpy_to_ypr(goal2_viewplace)] + ['tm_base', 'goal2_viewplace']
-    
     #robot_description_config = load_file('omron_moma', 'MoMa_TM12.urdf')
     robot_description_config = load_file('omron_moma', 'MoMa.urdf')
     #robot_description_config = load_file('amr_visualisation', 'urdf/AMR_Platform.urdf')
@@ -116,38 +104,6 @@ def generate_launch_description():
         output='screen'
     )
     
-    goal1_static_viewpick = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='goal1_viewpick_publisher',
-        output='log',
-        arguments= goal1_viewpick
-    )
-    
-    goal1_static_viewplace = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='goal1_viewplace_publisher',
-        output='log',
-        arguments= goal1_viewplace
-    )
-    
-    goal2_static_viewpick = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='goal2_viewpick_publisher',
-        output='log',
-        arguments= goal2_viewpick
-    )
-    
-    goal2_static_viewplace = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='goal2_viewplace_publisher',
-        output='log',
-        arguments= goal2_viewplace
-    )
-    
     # RViz goto point node
     goto_point_node = Node(
         package='om_aiv_navigation',
@@ -182,6 +138,13 @@ def generate_launch_description():
         executable='destination_publisher',
         output='screen'
     )
+    
+    # View Transform Publisher
+    view_publisher = Node(
+        package='omron_moma',
+        executable='view_publisher',
+        output='screen'
+    )
 
     return LaunchDescription([
     	rviz_node,
@@ -190,15 +153,12 @@ def generate_launch_description():
         static_world,
         goals_node,
         data_points_node,
-        goal1_static_viewpick,
-        goal1_static_viewplace,
-        goal2_static_viewpick,
-        goal2_static_viewplace,
         goto_point_node,
         localize_at_point_node,
         map_node,
         laser_scans_node,
         marker_publisher_node,
-        destination_publisher_node
+        destination_publisher_node,
+        view_publisher
         ])
 
