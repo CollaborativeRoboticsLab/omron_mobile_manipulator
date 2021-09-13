@@ -52,7 +52,7 @@ These packages can be used individually to control the TM machine and Autonomous
 To ensure that the submodules used are the most recent commits, navigate to each one individually with `cd src/Omron_TM_ROS2` and `cd src/Omron_AMR_ROS2` then type `git fetch`, followed by `git pull` right after cloning this repository
 
 [WARNING]
-In order to run the `omron_moma` package, *ensure that the requirements and setup for running Omron_TM_ROS2 (link:https://github.com/guanyewtan/Omron_TM_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) and Omron_AMR_ROS2 (link:https://github.com/guanyewtan/Omron_AMR_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) have been met or this package may not work.* Test both packages individually to ensure functionality.
+In order to run the `omron_moma` package, *ensure that the requirements and setup for running Omron_TM_ROS2 (link:https://github.com/zach-goh/Omron_TM_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) and Omron_AMR_ROS2 (link:https://github.com/zach-goh/Omron_AMR_ROS2/blob/master/docs/DeveloperGuide.adoc[Developer Guide]) have been met or this package may not work.* Test both packages individually to ensure functionality.
 
 
 === Hardware Connection
