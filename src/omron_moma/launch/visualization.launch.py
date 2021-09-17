@@ -145,6 +145,12 @@ def generate_launch_description():
         executable='view_publisher',
         output='screen'
     )
+    
+    tcp_publisher = Node(
+        package='pickplace',
+        executable='tcp_publisher',
+        output='screen'
+    )
 
     return LaunchDescription([
     	rviz_node,
@@ -159,6 +165,7 @@ def generate_launch_description():
         laser_scans_node,
         marker_publisher_node,
         destination_publisher_node,
-        view_publisher
+        view_publisher,
+        tcp_publisher
         ])
 
