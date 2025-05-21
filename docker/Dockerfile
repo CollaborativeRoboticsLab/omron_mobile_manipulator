@@ -29,7 +29,9 @@ RUN apt-get update && apt-get install -y \
     ros-humble-controller-manager \
     ros-humble-joint-trajectory-controller \
     ros-humble-joint-state-broadcaster \
-    ros-humble-rmw-cyclonedds-cpp
+    ros-humble-rmw-cyclonedds-cpp \
+    ros-humble-joint-state-publisher \
+    ros-humble-joint-state-publisher-gui
 
 
 RUN apt-get clean
@@ -49,10 +51,6 @@ RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2.git
 RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_CORE_ROS2.git -b humble
 
 WORKDIR ${WORKSPACE_ROOT}
-
-RUN rm /etc/ros/rosdep/sources.list.d/20-default.list
-
-RUN rosdep init && rosdep update && rosdep install --from-paths src -y --ignore-src
 
 # Build the workspace
 RUN . /opt/ros/humble/setup.sh && colcon build
