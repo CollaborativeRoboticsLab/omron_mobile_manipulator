@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
     python3-rosdep \
     build-essential \
     curl \
+    qtdeclarative5-dev \
     ros-humble-moveit \
     ros-humble-controller-manager \
     ros-humble-joint-trajectory-controller \
@@ -89,7 +90,11 @@ WORKDIR /
 
 COPY --from=base / /
 
+# uncomment if buiding through git workflow
 COPY docker/ros_entrypoint.sh ros_entrypoint.sh
+
+# uncomment if buiding locally
+# COPY ros_entrypoint.sh ros_entrypoint.sh  
 
 RUN chmod +x /ros_entrypoint.sh
 
