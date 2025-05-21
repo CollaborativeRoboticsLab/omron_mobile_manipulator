@@ -24,6 +24,7 @@ Clone the repositories into the `src` folder by
 git clone https://github.com/CollaborativeRoboticsLab/Omron_MoMa_ROS2.git
 git clone https://github.com/CollaborativeRoboticsLab/Omron_AMR_ROS2.git
 git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2.git
+git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_CORE_ROS2.git -b humble
 ```
 
 Then install dependencies by 
@@ -31,4 +32,24 @@ Then install dependencies by
 ```sh
 cd ..
 rosdep install --from-paths src -y --ignore-src
+```
+
+# Docker
+
+Clone this reposiotory
+
+```bash
+git clone https://github.com/CollaborativeRoboticsLab/Omron_MoMa_ROS2.git 
+cd Omron_MoMa_ROS2/docker
+```
+
+Pull the Docker image and start compose (No need to run `docker compose build`)
+```bash
+docker compose pull
+docker compose up
+```
+
+To clean the system,
+```bash
+docker compose down
 ```

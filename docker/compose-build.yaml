@@ -1,0 +1,12 @@
+services:
+  omron_moma_ros2:
+    container_name: omron_moma_ros2
+    build:
+      dockerfile: Dockerfile
+    commands:
+      # - ros2 launch astra_launch astra.launch.py
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - /dev:/dev

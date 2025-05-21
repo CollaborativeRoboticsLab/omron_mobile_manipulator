@@ -1,0 +1,11 @@
+services:
+  omron_moma_ros2:
+    container_name: omron_moma_ros2
+    image: ghcr.io/collaborativeroboticslab/omron_moma_ros2:humble
+    commands:
+      # - ros2 launch astra_launch astra.launch.py
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - /dev:/dev
