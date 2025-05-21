@@ -18,6 +18,11 @@ mkdir -p omron_ws/src
 cd omron_ws/src
 ```
 
+Install dependencies
+```sh
+sudo apt install ros-humble-moveit ros-humble-controller-manager ros-humble-joint-trajectory-controller ros-humble-joint-state-broadcaster ros-humble-rmw-cyclonedds-cpp
+```
+
 Clone the repositories into the `src` folder by
 
 ```sh

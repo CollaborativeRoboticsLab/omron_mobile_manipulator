@@ -25,7 +25,11 @@ RUN apt-get update && apt-get install -y \
     python3-rosdep \
     build-essential \
     curl \
-    ros-humble-moveit
+    ros-humble-moveit \
+    ros-humble-controller-manager \
+    ros-humble-joint-trajectory-controller \
+    ros-humble-joint-state-broadcaster \
+    ros-humble-rmw-cyclonedds-cpp
 
 
 RUN apt-get clean
