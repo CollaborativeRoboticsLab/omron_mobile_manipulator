@@ -90,7 +90,7 @@ WORKDIR /
 
 COPY --from=base / /
 
-COPY docker/ros_entrypoint.sh ros_entrypoint.sh
+COPY ros_entrypoint.sh ros_entrypoint.sh
 
 RUN chmod +x /ros_entrypoint.sh
 
