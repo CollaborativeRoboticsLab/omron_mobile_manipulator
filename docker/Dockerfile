@@ -31,7 +31,8 @@ RUN apt-get update && apt-get install -y \
     ros-humble-joint-state-broadcaster \
     ros-humble-rmw-cyclonedds-cpp \
     ros-humble-joint-state-publisher \
-    ros-humble-joint-state-publisher-gui
+    ros-humble-joint-state-publisher-gui \
+    ros-humble-vision-opencv
 
 
 RUN apt-get clean
