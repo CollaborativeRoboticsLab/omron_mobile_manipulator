@@ -27,7 +27,6 @@ RUN apt-get update && apt-get install -y \
     curl
 
 RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
 
 #############################################################################################################################
 #####
@@ -85,8 +84,8 @@ WORKDIR /
 
 COPY --from=base / /
 
-COPY docker/ros_entrypoint.sh /ros_entrypoint.sh
+COPY docker/ros_entrypoint.sh ros_entrypoint.sh
 
-RUN chmod +x /workspace_entrypoint.sh
+RUN chmod +x /ros_entrypoint.sh
 
-ENTRYPOINT [ "/workspace_entrypoint.sh" ]
+ENTRYPOINT [ "/ros_entrypoint.sh" ]

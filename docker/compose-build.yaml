@@ -3,7 +3,7 @@ services:
     container_name: omron_moma_ros2
     build:
       dockerfile: Dockerfile
-    commands:
+    # commands:
       # - ros2 launch astra_launch astra.launch.py
     restart: unless-stopped
     privileged: true
