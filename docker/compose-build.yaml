@@ -3,8 +3,9 @@ services:
     container_name: omron_moma_ros2
     build:
       dockerfile: Dockerfile
-    # commands:
-      # - ros2 launch astra_launch astra.launch.py
+    command:
+      # - ros2 run tm_driver tm_driver robot_ip:=<robot_ip_address>
+      - ros2 launch tm12x_moveit_config tm12x_run_move_group_headless.launch.py robot_ip:=<robot_ip_address>
     restart: unless-stopped
     privileged: true
     network_mode: host

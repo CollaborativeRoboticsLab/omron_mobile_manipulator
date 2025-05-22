@@ -51,7 +51,7 @@ WORKDIR ${WORKSPACE_ROOT}/src
 RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_MoMa_ROS2.git
 RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_AMR_ROS2.git 
 RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2.git
-RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_CORE_ROS2.git -b humble
+RUN git clone https://github.com/CollaborativeRoboticsLab/tmr_ros2.git
 
 WORKDIR ${WORKSPACE_ROOT}
 
