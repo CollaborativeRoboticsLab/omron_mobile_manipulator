@@ -6,6 +6,7 @@ This repository allows controlling a Omron MoMa (Omron Mobile Manipulator) using
 
 - [Omron_AMR_ROS2](https://github.com/CollaborativeRoboticsLab/Omron_AMR_ROS2) package 
 - [Omron_TM_ROS2](https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2) package
+- [tmr_ros2](https://github.com/CollaborativeRoboticsLab/tmr_ros2) package
 
 For supported features and limitations, see the individual repositories on the features supported by the MoMa.
 
