@@ -67,7 +67,11 @@ docker compose down
 
 2. [Establish Remote connection to TM Robot](https://github.com/CollaborativeRoboticsLab/tmr_ros2?tab=readme-ov-file#-remote-connection-to-tm-robot)
 
-3. Start TM Driver
+3. Once the robot starts up, it needs to have the listner node loaded (via TMFlow) and should be in the auto mode. On the arm it needs to flash blue and red, while on the pendent a blue light should appear near letter A.
+
+4. If it is in manual mode (arm blinking green and pendent has a yellow light near letter M), press `M/A` button few seconds until the yellow button near M letter starts blinking and quickly enter the password on the pendent using pendent `+` and `-` keys.
+
+5. Start TM Driver with the IP address of the robot using following command and replace the <robot_ip_address> with actual ip address.
 
 ```sh
 source install/setup.bash
@@ -99,7 +103,11 @@ ros2 launch tm12x_moveit_config tm12x_run_move_group.launch.py
 
 2. [Establish Remote connection to TM Robot](https://github.com/CollaborativeRoboticsLab/tmr_ros2?tab=readme-ov-file#-remote-connection-to-tm-robot)
 
-3. Start TM Driver by uncommenting the following line under `command` on the docker compose.yaml file and then running `docker compose up`
+3. Once the robot starts up, it needs to have the listner node loaded (via TMFlow) and should be in the auto mode. On the arm it needs to flash blue and red, while on the pendent a blue light should appear near letter A.
+
+4. If it is in manual mode (arm blinking green and pendent has a yellow light near letter M), press `M/A` button few seconds until the yellow button near M letter starts blinking and quickly enter the password on the pendent using pendent `+` and `-` keys.
+
+5. Start TM Driver by uncommenting the following line under `command` on the docker compose.yaml file and then running `docker compose up` replace the <robot_ip_address> with actual ip address.
 
 ```yaml
 command:
