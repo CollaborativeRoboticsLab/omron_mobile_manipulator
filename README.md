@@ -30,7 +30,7 @@ Clone the repositories into the `src` folder by
 git clone https://github.com/CollaborativeRoboticsLab/Omron_MoMa_ROS2.git
 git clone https://github.com/CollaborativeRoboticsLab/Omron_AMR_ROS2.git
 git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2.git
-git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_CORE_ROS2.git -b humble
+git clone https://github.com/CollaborativeRoboticsLab/tmr_ros2.git
 ```
 
 finally buildby
