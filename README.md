@@ -33,7 +33,7 @@ git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2.git
 git clone https://github.com/CollaborativeRoboticsLab/tmr_ros2.git
 ```
 
-finally buildby
+finally build by
 
 ```sh
 cd ..
