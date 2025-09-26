@@ -16,6 +16,7 @@ RUN apt-get update && apt-get upgrade -y \
 RUN apt-get update && apt-get install --no-install-recommends -y \
     sudo \
     git \
+    qtdeclarative5-dev \
     ros-${ROS_DISTRO}-navigation2 \
     ros-${ROS_DISTRO}-nav2-bringup \
     ros-${ROS_DISTRO}-slam-toolbox \

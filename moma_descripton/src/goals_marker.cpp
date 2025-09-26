@@ -5,8 +5,8 @@
 #include "std_msgs/msg/string.hpp"
 #include "tf2_ros/transform_broadcaster.h"
 #include "tf2/LinearMath/Quaternion.h"
-#include "om_aiv_msg/srv/arcl_api.hpp"
-#include "om_aiv_msg/srv/arcl_listen.hpp"
+#include "amr_msgs/srv/arcl_api.hpp"
+#include "amr_msgs/srv/arcl_listen.hpp"
 
 // Configurable values.
 std::string head_frame;
@@ -56,8 +56,8 @@ std::vector<std::string> goals_list;
 
 // Function prototypes
 void req_goals_coord(
-    rclcpp::Client<om_aiv_msg::srv::ArclApi>::SharedPtr& arcl_api_client, 
-    std::shared_ptr<om_aiv_msg::srv::ArclApi_Request_<std::allocator<void>>>& goals_info_req, 
+    rclcpp::Client<amr_msgs::srv::ArclApi>::SharedPtr& arcl_api_client, 
+    std::shared_ptr<amr_msgs::srv::ArclApi_Request_<std::allocator<void>>>& goals_info_req, 
     visualization_msgs::msg::MarkerArray& goals,
     visualization_msgs::msg::MarkerArray& goals_text,
     visualization_msgs::msg::Marker one_goal,
@@ -120,7 +120,7 @@ int main(int argc, char** argv)
     goal_texts_g_clr = node->get_parameter(GOAL_TEXTS_G_CLR_PARAM).as_double();
     goal_texts_b_clr = node->get_parameter(GOAL_TEXTS_B_CLR_PARAM).as_double();
 
-    auto arcl_api_client = node->create_client<om_aiv_msg::srv::ArclApi>(API_SRV_NAME);
+    auto arcl_api_client = node->create_client<amr_msgs::srv::ArclApi>(API_SRV_NAME);
     auto goals_pub = node->create_publisher<visualization_msgs::msg::MarkerArray>(goals_vis_topic, 10);
     auto all_goals_sub = node->create_subscription<std_msgs::msg::String>(ALL_GOALS_TOPIC, 10, all_goals_cb);
 
@@ -158,11 +158,11 @@ int main(int argc, char** argv)
     one_goal_text.color.b = goals_b_clr;
 
     // Create the service request messages to get goals data.
-    auto goals_list_req = std::make_shared<om_aiv_msg::srv::ArclListen::Request>();
+    auto goals_list_req = std::make_shared<amr_msgs::srv::ArclListen::Request>();
     //std::cout << "HELLO DARKNESS POKEMON OF TYPE: " << 
     goals_list_req->resp_header = GOAL_RESP_H;
 
-    auto goals_info_req = std::make_shared<om_aiv_msg::srv::ArclApi::Request>();
+    auto goals_info_req = std::make_shared<amr_msgs::srv::ArclApi::Request>();
     goals_info_req->line_identifier = GOALS_LIST_END;
 
     while (rclcpp::ok())
@@ -184,8 +184,8 @@ int main(int argc, char** argv)
 }
 
 void req_goals_coord(
-    rclcpp::Client<om_aiv_msg::srv::ArclApi>::SharedPtr& arcl_api_client, 
-    std::shared_ptr<om_aiv_msg::srv::ArclApi_Request_<std::allocator<void>>>& goals_info_req, 
+    rclcpp::Client<amr_msgs::srv::ArclApi>::SharedPtr& arcl_api_client, 
+    std::shared_ptr<amr_msgs::srv::ArclApi_Request_<std::allocator<void>>>& goals_info_req, 
     visualization_msgs::msg::MarkerArray& goals,
     visualization_msgs::msg::MarkerArray& goals_text,
     visualization_msgs::msg::Marker one_goal,

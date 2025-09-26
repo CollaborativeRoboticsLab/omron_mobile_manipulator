@@ -28,7 +28,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(control_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
-find_package(om_aiv_msg REQUIRED)
+find_package(amr_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -66,7 +66,7 @@ ament_target_dependencies(joints_publisher
   geometry_msgs
   control_msgs
   tf2_ros
-  om_aiv_msg
+  amr_msgs
 )
 
 add_executable(goals_marker
@@ -79,7 +79,7 @@ ament_target_dependencies(goals_marker
  visualization_msgs
  geometry_msgs
  tf2_ros
- om_aiv_msg
+ amr_msgs
 )
 
 add_executable(data_points_marker
@@ -93,7 +93,7 @@ ament_target_dependencies(data_points_marker
   geometry_msgs
   control_msgs
   tf2_ros
-  om_aiv_msg
+  amr_msgs
   visualization_msgs
   nav_msgs
 )
@@ -109,7 +109,7 @@ ament_target_dependencies(laser_scans
   geometry_msgs
   control_msgs
   tf2_ros
-  om_aiv_msg
+  amr_msgs
   visualization_msgs
   nav_msgs
 )

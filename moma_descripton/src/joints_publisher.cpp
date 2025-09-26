@@ -9,7 +9,7 @@
 #include "geometry_msgs/msg/quaternion.hpp"
 #include "tf2/LinearMath/Quaternion.h"
 #include "tf2_ros/transform_broadcaster.h"
-#include "om_aiv_msg/msg/status.hpp"
+#include "amr_msgs/msg/status.hpp"
 #include "std_msgs/msg/string.hpp"
 
 // Global Variables
@@ -54,7 +54,7 @@ geometry_msgs::msg::Quaternion createQuaternionMsgFromYaw(double yaw)
 }
 
 // callback function for subscriber
-void pose_cb(const om_aiv_msg::msg::Status::SharedPtr pose_msg)
+void pose_cb(const amr_msgs::msg::Status::SharedPtr pose_msg)
 {
     // The values are in millimeters, convert to meters.
     pos_x = pose_msg->location.x / 1000.0; 
@@ -74,7 +74,7 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
     node = std::make_shared<rclcpp::Node>("joints_publisher");
     auto publisher = node->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
-    auto subscriber = node->create_subscription<om_aiv_msg::msg::Status>("ldarcl_status", 10, pose_cb);
+    auto subscriber = node->create_subscription<amr_msgs::msg::Status>("ldarcl_status", 10, pose_cb);
     tf2_ros::TransformBroadcaster tf_broadcaster(node);
     rclcpp::Rate loop_rate(50);
 
