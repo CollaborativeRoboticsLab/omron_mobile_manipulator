@@ -48,7 +48,7 @@ RUN apt-get clean
 # Create and clone workspace
 WORKDIR ${WORKSPACE_ROOT}/src
 
-RUN git clone https://github.com/CollaborativeRoboticsLab/omron_mobile_manipulator.git
+RUN git clone https://github.com/CollaborativeRoboticsLab/omron_moma.git
 RUN git clone https://github.com/CollaborativeRoboticsLab/omron_arm.git 
 RUN git clone https://github.com/CollaborativeRoboticsLab/omron_base.git
 
