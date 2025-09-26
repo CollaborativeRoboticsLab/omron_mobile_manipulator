@@ -1,6 +1,6 @@
 services:
-  omron_moma_ros2:
-    container_name: omron_moma_ros2
+  omron_moma:
+    container_name: omron_moma
     build:
       dockerfile: Dockerfile
     command:

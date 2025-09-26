@@ -2,11 +2,10 @@
 
 Original packages are from [OmronAPAC](https://github.com/OmronAPAC) 
 
-This repository allows controlling a Omron MoMa (Omron Mobile Manipulator) using packages that bridges,
+This repository allows controlling the Base and Arm of the Omron Mobile Manipulator using packages,
 
-- [Omron_AMR_ROS2](https://github.com/CollaborativeRoboticsLab/Omron_AMR_ROS2) package 
-- [Omron_TM_ROS2](https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2) package
-- [tmr_ros2](https://github.com/CollaborativeRoboticsLab/tmr_ros2) package
+- [omron_arm](https://github.com/CollaborativeRoboticsLab/omron_arm) package 
+- [omron_base](https://github.com/CollaborativeRoboticsLab/omron_base) package
 
 For supported features and limitations, see the individual repositories on the features supported by the MoMa.
 
@@ -27,10 +26,9 @@ sudo apt install ros-humble-moveit ros-humble-controller-manager ros-humble-join
 Clone the repositories into the `src` folder by
 
 ```sh
-git clone https://github.com/CollaborativeRoboticsLab/Omron_MoMa_ROS2.git
-git clone https://github.com/CollaborativeRoboticsLab/Omron_AMR_ROS2.git
-git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2.git
-git clone https://github.com/CollaborativeRoboticsLab/tmr_ros2.git
+git clone https://github.com/CollaborativeRoboticsLab/omron_arm.git
+git clone https://github.com/CollaborativeRoboticsLab/omron_base.git
+git clone https://github.com/CollaborativeRoboticsLab/omron_mobile_manipulator.git
 ```
 
 finally build by
@@ -60,78 +58,3 @@ To clean the system,
 docker compose down
 ```
 
-## Usage 
-
-### TM Robot with TMFlow
-
-1. [Startup TMFLow software with a listener node](https://github.com/CollaborativeRoboticsLab/tmr_ros2?tab=readme-ov-file#-tmflow-listen-node-setup)
-
-2. [Establish Remote connection to TM Robot](https://github.com/CollaborativeRoboticsLab/tmr_ros2?tab=readme-ov-file#-remote-connection-to-tm-robot)
-
-3. Once the robot starts up, it needs to have the listner node loaded (via TMFlow) and should be in the auto mode. On the arm it needs to flash blue and red, while on the pendent a blue light should appear near letter A.
-
-4. If it is in manual mode (arm blinking green and pendent has a yellow light near letter M), press `M/A` button few seconds until the yellow button near M letter starts blinking and quickly enter the password on the pendent using pendent `+` and `-` keys.
-
-5. Start TM Driver with the IP address of the robot using following command and replace the <robot_ip_address> with actual ip address.
-
-```sh
-source install/setup.bash
-ros2 run tm_driver tm_driver robot_ip:=<robot_ip_address>
-```
-
-### TM Robot Arm with Moveit 
-
-TM driver node is included in the tm12x_run_move_group.launch.py file.
-```sh
-source install/setup.bash
-ros2 launch tm12x_moveit_config tm12x_run_move_group.launch.py robot_ip:=<robot_ip_address>
-```
-
-### TM Robot Arm with Moveit (Simulation)
-
-TM driver node is included in the tm12x_run_move_group.launch.py file.
-```sh
-source install/setup.bash
-ros2 launch tm12x_moveit_config tm12x_run_move_group.launch.py
-```
-
-
-## Usage with docker
-
-### TM Robot with TMFlow
-
-1. [Startup TMFLow software with a listener node](https://github.com/CollaborativeRoboticsLab/tmr_ros2?tab=readme-ov-file#-tmflow-listen-node-setup)
-
-2. [Establish Remote connection to TM Robot](https://github.com/CollaborativeRoboticsLab/tmr_ros2?tab=readme-ov-file#-remote-connection-to-tm-robot)
-
-3. Once the robot starts up, it needs to have the listner node loaded (via TMFlow) and should be in the auto mode. On the arm it needs to flash blue and red, while on the pendent a blue light should appear near letter A.
-
-4. If it is in manual mode (arm blinking green and pendent has a yellow light near letter M), press `M/A` button few seconds until the yellow button near M letter starts blinking and quickly enter the password on the pendent using pendent `+` and `-` keys.
-
-5. Start TM Driver by uncommenting the following line under `command` on the docker compose.yaml file and then running `docker compose up` replace the <robot_ip_address> with actual ip address.
-
-```yaml
-command:
-  - ros2 run tm_driver tm_driver robot_ip:=<robot_ip_address>
-```
-
-### TM Robot Arm with Moveit 
-
-1. TM driver node is included in the tm12x_run_move_group.launch.py file. To start the headless moveit server, uncomment the following line on the companion computer
-
-    ```yaml
-    command:
-    - ros2 launch tm12x_moveit_config tm12x_run_move_group_headless.launch.py robot_ip:=<robot_ip_address>
-    ```
-
-    and run
-
-    ```sh
-    docker compose up
-    ```
-
-2. On the remote computer run the following command,
-    ```sh
-    source install/setup.bash
-    ros2 launch tm12x_moveit_config tm12x_run_move_group_visualize.launch.py
-    ```

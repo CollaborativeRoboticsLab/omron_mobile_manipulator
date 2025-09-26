@@ -48,10 +48,9 @@ RUN apt-get clean
 # Create and clone workspace
 WORKDIR ${WORKSPACE_ROOT}/src
 
-RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_MoMa_ROS2.git
-RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_AMR_ROS2.git 
-RUN git clone https://github.com/CollaborativeRoboticsLab/Omron_TM_ROS2.git
-RUN git clone https://github.com/CollaborativeRoboticsLab/tmr_ros2.git
+RUN git clone https://github.com/CollaborativeRoboticsLab/omron_mobile_manipulator.git
+RUN git clone https://github.com/CollaborativeRoboticsLab/omron_arm.git 
+RUN git clone https://github.com/CollaborativeRoboticsLab/omron_base.git
 
 WORKDIR ${WORKSPACE_ROOT}
 
@@ -84,7 +83,7 @@ RUN apt-get clean
 FROM ros:humble-ros-base-jammy AS final
 
 ## Parameters
-ENV WORKSPACE_ROOT=/navstack
+ENV WORKSPACE_ROOT=/omron_ws
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 WORKDIR /
