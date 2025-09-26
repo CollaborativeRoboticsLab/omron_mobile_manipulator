@@ -20,7 +20,7 @@ cd omron_ws/src
 
 Install dependencies
 ```sh
-sudo apt install ros-humble-moveit ros-humble-controller-manager ros-humble-joint-trajectory-controller ros-humble-joint-state-broadcaster ros-humble-rmw-cyclonedds-cpp ros-humble-joint-state-publisher ros-humble-joint-state-publisher-gui ros-humble-vision-opencv
+sudo apt install ros-humble-moveit ros-humble-controller-manager ros-humble-joint-trajectory-controller ros-humble-joint-state-broadcaster ros-humble-rmw-cyclonedds-cpp ros-humble-joint-state-publisher ros-humble-joint-state-publisher-gui ros-humble-vision-opencv ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-slam-toolbox
 ```
 
 Clone the repositories into the `src` folder by
@@ -37,6 +37,8 @@ finally build by
 cd ..
 colcon build
 ```
+
+**or save time and use devcontainer or docker image** 
 
 ## Docker
 
